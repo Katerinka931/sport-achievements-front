@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {SportService} from "../../services/sport-service/sport.service";
 import {Sport} from "../../models/sport-model/sport.model";
+import {Team} from "../../models/team-model/team.model";
+import {Sportsman} from "../../models/sportsman-model/sportsman.model";
+import {SportService} from "../../services/sport-service/sport.service";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-sports-list',
@@ -8,22 +10,24 @@ import {Sport} from "../../models/sport-model/sport.model";
   styleUrls: ['./sports-list.component.css']
 })
 export class SportsListComponent implements OnInit {
+  sports?: Sport[];
+  teams?: Team[];
+  sportsmen?: Sportsman[];
 
-  private sports?: Sport[];
+  hidden_item: any = {};
 
-  constructor(private sportService: SportService) { }
+  constructor(private sportService: SportService) {
+  }
 
   ngOnInit(): void {
-    console.log('init');
     this.retrieve();
   }
 
   private retrieve(): void {
     this.sportService.getAll().subscribe({
       next: (data) => {
-       console.log(data);
+        this.sports = data;
       }
     });
   }
-
 }

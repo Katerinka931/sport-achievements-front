@@ -1,15 +1,15 @@
-<p>sports-list works!</p>
-
-<p>sports-list works!</p>
-
-<p>sports-list works!</p>
-
-<p>sports-list works!</p>
-
-<p>sports-list works!</p>
-
-<p>sports-list works!</p>
-
-<p>sports-list works!</p>
-
-
+<li *ngFor="let sport of sports; let i = index">
+  <button (click)="hidden_item[sport.id] = !hidden_item[sport.id]">Click</button>
+  <p> {{ sport.name }} </p>
+  <div [hidden]="!hidden_item[sport.id]">
+    Команды:
+    <div *ngFor="let team of sport['teams']; let i = index">
+      {{team.name}}
+    </div>
+    Спортсмены:
+    <div *ngFor="let sportsman of sport['sportsmen']; let i = index">
+      {{sportsman.lastName}}
+    </div>
+    <hr/>
+  </div>
+</li>
