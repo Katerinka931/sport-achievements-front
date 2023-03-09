@@ -9,7 +9,18 @@
     Спортсмены:
     <div *ngFor="let sportsman of sport['sportsmen']; let i = index">
       {{sportsman.lastName}}
+      <button (click)="hidden_sportsman_data[sportsman.id] = !hidden_sportsman_data[sportsman.id]">Click</button>
+      <div [hidden]="!hidden_sportsman_data[sportsman.id]">
+        Контакты:
+        <div *ngFor="let contact of sportsman['contacts']">
+          {{contact.phone}}
+        </div>
+        Достижения:
+        <div *ngFor="let ach of sportsman['achievements']">
+          {{ach.name}}
+        </div>
+      </div>
     </div>
-    <hr/>
   </div>
+  <hr/>
 </li>

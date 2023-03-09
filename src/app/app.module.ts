@@ -9,13 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TeamsListComponent } from './components/teams-list/teams-list.component';
 import { SportsmenListComponent } from './components/sportsmen-list/sportsmen-list.component';
-import { EditSportAdminComponent } from './components/edit-sport-admin/edit-sport-admin.component';
-import { EditSportsmanAdminComponent } from './components/edit-sportsman-admin/edit-sportsman-admin.component';
-import { EditTeamAdminComponent } from './components/edit-team-admin/edit-team-admin.component';
 import {MatTreeModule} from "@angular/material/tree";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatButtonModule} from "@angular/material/button";
+import { EditSportsmanComponent } from './components/edit-sportsman/edit-sportsman.component';
+import { EditTeamComponent } from './components/edit-team/edit-team.component';
+import {EditSportComponent} from "./components/edit-sport/edit-sport.component";
 
 @NgModule({
   declarations: [
@@ -23,9 +23,9 @@ import {MatButtonModule} from "@angular/material/button";
     SportsListComponent,
     TeamsListComponent,
     SportsmenListComponent,
-    EditSportAdminComponent,
-    EditSportsmanAdminComponent,
-    EditTeamAdminComponent
+    EditSportsmanComponent,
+    EditTeamComponent,
+    EditSportComponent
   ],
     imports: [
         BrowserModule,

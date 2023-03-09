@@ -1,21 +1,16 @@
 <div>
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
+  <nav class="navbar navbar-expand navbar-light bg-info">
     <a class="navbar-brand" style="margin-left: 20px">@Sport</a>
     <div class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a routerLink="api/sport" class="nav-link">Виды спорта</a>
+        <a routerLink="api/sport/main" class="nav-link">Виды спорта</a>
       </li>
       <li class="nav-item">
-        <a routerLink="api/team" class="nav-link">Команды</a>
+        <a routerLink="api/team/main" class="nav-link">Команды</a>
       </li>
       <li class="nav-item">
-        <a routerLink="api/sportsmen" class="nav-link">Спортсмены</a>
+        <a routerLink="api/sportsmen/main" class="nav-link">Спортсмены</a>
       </li>
-      <li class="nav-item">
-        <a routerLink="api/sportsmen" class="nav-link">Вход</a>
-      </li>
-
-<!--      if admin       -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
            aria-expanded="false">
@@ -27,10 +22,6 @@
           <li><a class="dropdown-item" routerLink="api/sportsmen">Игроки</a></li>
         </ul>
       </li>
-      <li class="nav-item">
-        <a routerLink="api/sportsmen" class="nav-link">Выход</a>
-      </li>
-
     </div>
   </nav>
   <div class="container mt-3">

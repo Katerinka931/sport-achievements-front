@@ -1,1 +1,28 @@
-<p>teams-list works!</p>
+<div *ngFor="let team of teams; let i = index">
+  <button (click)="hidden_item[team.id] = !hidden_item[team.id]">Click</button>
+  {{team.name}}
+  <div [hidden]="!hidden_item[team.id]">
+    Спортсмены:
+    <div *ngFor="let sportsman of team['sportsmen']; let i = index">
+      {{sportsman.lastName}}
+      <button (click)="hidden_sportsman_data[sportsman.id] = !hidden_sportsman_data[sportsman.id]">Click</button>
+      <div [hidden]="!hidden_sportsman_data[sportsman.id]">
+        Контакты:
+        <div *ngFor="let contact of sportsman['contacts']">
+          {{contact.phone}}
+        </div>
+        Достижения:
+        <div *ngFor="let ach of sportsman['achievements']">
+          {{ach.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr/>
+</div>
+
+
+
+
+
+

@@ -13,6 +13,6 @@ export class SportService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Sport[]> {
-    return this.http.get<Sport[]>(baseUrl);
+    return this.http.get<Sport[]>(baseUrl + '/main');
   }
 }

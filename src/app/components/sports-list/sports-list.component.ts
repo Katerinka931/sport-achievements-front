@@ -1,6 +1,4 @@
 import {Sport} from "../../models/sport-model/sport.model";
-import {Team} from "../../models/team-model/team.model";
-import {Sportsman} from "../../models/sportsman-model/sportsman.model";
 import {SportService} from "../../services/sport-service/sport.service";
 import {Component, OnInit} from '@angular/core';
 
@@ -11,10 +9,9 @@ import {Component, OnInit} from '@angular/core';
 })
 export class SportsListComponent implements OnInit {
   sports?: Sport[];
-  teams?: Team[];
-  sportsmen?: Sportsman[];
 
   hidden_item: any = {};
+  hidden_sportsman_data: any = {};
 
   constructor(private sportService: SportService) {
   }
@@ -27,6 +24,7 @@ export class SportsListComponent implements OnInit {
     this.sportService.getAll().subscribe({
       next: (data) => {
         this.sports = data;
+        console.log(data)
       }
     });
   }
