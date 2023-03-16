@@ -9,7 +9,6 @@ import {Sportsman} from "../../models/sportsman-model/sportsman.model";
 })
 export class SportsmenListComponent implements OnInit {
   sportsmen: Sportsman[];
-  hidden_sportsman_data: any = {};
 
   constructor(private sportsmanService: SportsmanService) { }
 
@@ -21,6 +20,8 @@ export class SportsmenListComponent implements OnInit {
     this.sportsmanService.getAll().subscribe({
       next: (data) => {
         this.sportsmen = data;
+      }, error: (e) => {
+        console.log(e);
       }
     });
   }

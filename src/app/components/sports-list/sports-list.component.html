@@ -1,26 +1,71 @@
-<li *ngFor="let sport of sports; let i = index">
-  <button (click)="hidden_item[sport.id] = !hidden_item[sport.id]">Click</button>
-  <p> {{ sport.name }} </p>
-  <div [hidden]="!hidden_item[sport.id]">
-    Команды:
-    <div *ngFor="let team of sport['teams']; let i = index">
-      {{team.name}}
-    </div>
-    Спортсмены:
-    <div *ngFor="let sportsman of sport['sportsmen']; let i = index">
-      {{sportsman.lastName}}
-      <button (click)="hidden_sportsman_data[sportsman.id] = !hidden_sportsman_data[sportsman.id]">Click</button>
-      <div [hidden]="!hidden_sportsman_data[sportsman.id]">
-        Контакты:
-        <div *ngFor="let contact of sportsman['contacts']">
-          {{contact.phone}}
-        </div>
-        Достижения:
-        <div *ngFor="let ach of sportsman['achievements']">
-          {{ach.name}}
+<div style="margin-bottom: 150px; margin-top: 50px">
+  <div *ngFor="let sport of sports; let i = index" style="margin-bottom: 10px">
+    <div class="accordion" id="accordionSport">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSport">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                  [attr.data-bs-target]="'#collapse'+ sport.name" [attr.aria-controls]="'collapse'+sport.name"
+                  aria-expanded="false">
+            {{sport.name | titlecase }}
+          </button>
+        </h2>
+        <div id="collapse{{sport.name}}" class="accordion-collapse collapse" aria-labelledby="headingSport">
+          <div class="accordion-body">
+            <div class="text-center custom-title">Команды</div>
+            <div *ngFor="let team of sport['teams']; let i = index">
+              <div class="accordion" id="accordionTeam">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTeam">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#collapse'+ team.name"
+                            aria-expanded="false">
+                      {{team.name | titlecase}}
+                    </button>
+                  </h2>
+                  <div id="collapse{{team.name}}" class="accordion-collapse collapse" aria-labelledby="headingTeam">
+                    <div class="accordion-body">
+                    <div *ngFor="let sportsman of team['sportsmen']; let i = index">
+                      {{sportsman.lastName | titlecase}} {{sportsman.firstName | titlecase}} {{sportsman.middleName | titlecase}}
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center custom-title">Спортсмены</div>
+            <div *ngFor="let sportsman of sport['sportsmen']; let i = index">
+              <div class="accordion" id="accordionSportsmen">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingSportsmen">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#collapse'+ sportsman.id"
+                            aria-expanded="false" aria-controls="collapseOne">
+                      {{sportsman.lastName | titlecase}} {{sportsman.firstName | titlecase}} {{sportsman.middleName | titlecase}}
+                    </button>
+                  </h2>
+                  <div id="collapse{{sportsman.id}}" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                    <div class="accordion-body">
+                      <div class="text-center">Контакты</div>
+                      Телефон: <br/>
+                      <div *ngFor="let contact of sportsman['contacts']">
+                        &nbsp;&nbsp;&nbsp;&nbsp;{{contact.phone}} <br>
+                      </div>
+                      Электронная почта: <br/>
+                      <div *ngFor="let contact of sportsman['contacts']">
+                        &nbsp;&nbsp;&nbsp;&nbsp;{{contact.email}} <br>
+                      </div>
+                      <div class="text-center">Достижения</div>
+                      <div *ngFor="let ach of sportsman['achievements']">
+                        {{ach.name}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <hr/>
-</li>
+</div>

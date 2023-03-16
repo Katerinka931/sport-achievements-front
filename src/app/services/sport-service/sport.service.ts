@@ -15,4 +15,32 @@ export class SportService {
   getAll(): Observable<Sport[]> {
     return this.http.get<Sport[]>(baseUrl + '/main');
   }
+
+  deleteSport(id: number): Observable<any> {
+    return this.http.delete(`${baseUrl}/${id}`);
+  }
+
+  createSport(data: any): Observable<any> {
+    return this.http.post(baseUrl, data);
+  }
+
+  updateSport(id: number, data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/${id}`, data);
+  }
+
+  updateTeam(sport_id: number, team_id: number, data:any): Observable<any> {
+    return this.http.put(`${baseUrl}/${sport_id}/team/${team_id}`, data);
+  }
+
+  createTeam(sport_id: number, data: any) {
+    return this.http.post(`${baseUrl}/${sport_id}/team`, data);
+  }
+
+  updateSportsman(sport_id: number, sportsman_id: number, data: any): Observable<any>{
+    return this.http.put(`${baseUrl}/${sport_id}/sportsman/${sportsman_id}`, data);
+  }
+
+  createSportsman(sport_id: number, data: any){
+    return this.http.post(`${baseUrl}/${sport_id}/sportsman`, data);
+  }
 }

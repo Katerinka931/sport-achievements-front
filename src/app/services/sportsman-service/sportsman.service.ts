@@ -14,4 +14,15 @@ export class SportsmanService {
   getAll():Observable<Sportsman[]>  {
     return this.http.get<Sportsman[]>(baseUrl + '/main');
   }
+  deleteSportsman(id: number): Observable<any> {
+    return this.http.delete(`${baseUrl}/${id}`);
+  }
+
+  createSportsman(data: any): Observable<any> {
+    return this.http.post(baseUrl, data);
+  }
+
+  updateSportsman(id: number, data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/${id}`, data);
+  }
 }

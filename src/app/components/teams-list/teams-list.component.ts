@@ -8,10 +8,7 @@ import {TeamService} from "../../services/team-service/team.service";
   styleUrls: ['./teams-list.component.css']
 })
 export class TeamsListComponent implements OnInit {
-
   teams?: Team[];
-  hidden_item: any = {};
-  hidden_sportsman_data: any = {};
 
   constructor(private teamService: TeamService) {
   }
@@ -24,8 +21,8 @@ export class TeamsListComponent implements OnInit {
     this.teamService.getAll().subscribe({
       next: (data) => {
         this.teams = data;
-
-        console.log(this.teams);
+      }, error: (e) => {
+        console.log(e);
       }
     });
   }

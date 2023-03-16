@@ -10,9 +10,6 @@ import {Component, OnInit} from '@angular/core';
 export class SportsListComponent implements OnInit {
   sports?: Sport[];
 
-  hidden_item: any = {};
-  hidden_sportsman_data: any = {};
-
   constructor(private sportService: SportService) {
   }
 
@@ -24,7 +21,8 @@ export class SportsListComponent implements OnInit {
     this.sportService.getAll().subscribe({
       next: (data) => {
         this.sports = data;
-        console.log(data)
+      }, error: (e) => {
+        console.log(e);
       }
     });
   }

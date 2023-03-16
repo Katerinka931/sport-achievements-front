@@ -4,4 +4,6 @@ export class Team {
   count?: number;
 
   teamsSport?: any;
+
+  selectedSport?: any;
 }

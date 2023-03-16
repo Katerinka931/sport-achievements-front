@@ -8,4 +8,7 @@ export class Sportsman {
 
   sport?: any;
   team?: any;
+
+  selectedSport?: any;
+  selectedTeam?: any;
 }
