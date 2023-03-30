@@ -1,1 +1,111 @@
-<p>edit-sportsman works!</p>
+<head>
+  <title>Редактирование</title>
+</head>
+<body>
+<div class="row" style="height: 90vh; border: 1px solid gray">
+  <div class="col-2" style="height: 100%; border: 1px solid gray">
+    <p class="text-center">Команда</p>
+    <div *ngFor="let sportsman of sportsmen; let i = index">
+      <div (click)="selectItem(sportsman.id!)" class="item">
+        {{sportsman.lastName | titlecase}} {{sportsman.firstName | titlecase}} {{sportsman.middleName | titlecase}}
+      </div>
+      <button class="btn btn-outline-danger control-button" (click)="deleteSportsman(sportsman.id!)"> –
+      </button>
+    </div>
+  </div>
+  <div class="col-2 parent" style="height: 100%; border: 1px solid gray">
+    <p>Информация</p>
+    <button class="btn btn-outline-success control-button" (click)="createSportsman()">+</button>
+    <div>
+      <input class="item" type="text" id="passport" [(ngModel)]="currentSportsman.passport" name="passport"
+             placeholder="Паспорт"/>
+      <input class="item text-capitalize" type="text" id="lastName" [(ngModel)]="currentSportsman.lastName"
+             name="lastName" placeholder="Фамилия"/>
+      <input class="item text-capitalize" type="text" id="firstName" [(ngModel)]="currentSportsman.firstName"
+             name="firstName" placeholder="Имя"/>
+      <input class="item text-capitalize" type="text" id="middleName" [(ngModel)]="currentSportsman.middleName"
+             name="middleName" placeholder="Отчество"/>
+      <input class="item" type="date" id="birthdate" [(ngModel)]="currentSportsman.birthdate" name="birthdate"/>
+
+
+      <select class="item" id="create_team_selector" [(ngModel)]="selectedTeam">
+        <option *ngFor="let type of teams"
+                [value]="type.name" [selected]="type.name == selectedTeam">
+          {{ type.name }}
+        </option>
+      </select>
+      <select class="item" id="create_sport_selector" [(ngModel)]="selectedSport">
+      <option *ngFor="let type of sports"
+              [value]="type.name" [selected]="type.name == selectedSport">
+        {{ type.name }}
+      </option>
+    </select>
+    </div>
+    <div class="child" style=" bottom: 17px">
+      <button type="submit" class="btn btn-outline-primary" style="width: 90%;" (click)="editSportsman()">
+        Сохранить
+      </button>
+    </div>
+    <br/>
+  </div>
+  <div class="col-8" style="height: 100%; border: 1px solid gray">
+    <div style="height: 50%; border-bottom: 1px solid black;" class="parent">
+      <p>Контакты</p>
+      <div style="height: 70%; overflow: auto; border-bottom: 1px dotted black">
+        <div *ngFor="let contact of contacts; let i = index" class="custom-row">
+          <div>
+            <input class="additional-contact-item contact-update" type="text" id="phone{{contact.id}}"
+                   value="{{contact.phone}}"/>
+            <input class="additional-contact-item contact-update" type="text" id="email{{contact.id}}"
+                   value="{{contact.email}}"/>
+            <button class="btn btn-outline-primary" style="float: right; margin-left: 1%"
+                    (click)="updateContact(contact.id!)">
+              ✏
+            </button>
+            <button class="btn btn-outline-danger" style="float: right;" (click)="deleteContact(contact.id!)"> –
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="child">
+        <input class="additional-contact-item contact-update" type="text" id="phone" [(ngModel)]="newContact.phone"
+               placeholder="Телефон"/>
+        <input class="additional-contact-item contact-update" type="text" id="email" [(ngModel)]="newContact.email"
+               placeholder="Электронная почта"/>
+        <button class="btn btn-outline-success" style="float: right; margin-left: 1%" (click)="createContact()"> +
+        </button>
+      </div>
+    </div>
+    <div style="height: 50%;" class="parent">
+      <p>Достижения</p>
+      <div style="height: 70%; overflow: auto; border-bottom: 1px dotted black">
+        <div *ngFor="let ach of achievements; let i = index" class="custom-row">
+          <div>
+
+            <input class="additional-contact-item contact-update" type="text" id="name{{ach.id}}"
+                   value="{{ach.name}}"/>
+            <input class="additional-contact-item contact-update" type="text" id="recvDate{{ach.id}}"
+                   value="{{ach.recvDate}}"/>
+            <button class="btn btn-outline-primary" style="float: right; margin-left: 1%"
+                    (click)="updateAchievement(ach.id!)"> ✏
+            </button>
+            <button class="btn btn-outline-danger" style="float: right;" (click)="deleteSportsman(ach.id!)"> –
+            </button>
+          </div>
+          <br/><br/>
+        </div>
+      </div>
+      <div class="child">
+        <input class="additional-contact-item contact-update" type="text" id="name" [(ngModel)]="newAchievement.name"
+               placeholder="Название"/>
+        <input class="additional-contact-item contact-update" type="date" id="recvDate" [(ngModel)]="newAchievement.recvDate"/>
+        <button type="submit" class="btn btn-outline-success" style="float: right; margin-left: 1%"
+                (click)="createSportsman()">
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+

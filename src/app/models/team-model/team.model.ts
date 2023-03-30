@@ -5,7 +5,5 @@ export class Team {
   name?: string;
   count?: number;
 
-  teamsSport?: Sport;
-
   selectedSport?: Sport;
 }

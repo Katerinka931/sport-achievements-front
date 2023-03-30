@@ -106,6 +106,7 @@ export class EditSportComponent {
     this.sportService.deleteSport(id).subscribe({
       next: (res) => {
         this.retrieve();
+        this.clean();
       },
       error: (e) => {
         console.log(e);
@@ -226,5 +227,10 @@ export class EditSportComponent {
         console.error(e);
       }
     });
+  }
+
+  private clean(): void {
+    this.teams = [];
+    this.sportsmen = [];
   }
 }

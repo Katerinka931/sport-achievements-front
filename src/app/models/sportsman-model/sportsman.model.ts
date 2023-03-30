@@ -9,9 +9,6 @@ export class Sportsman {
   middleName?: string;
   birthdate?: Date;
 
-  sport?: Sport;
-  team?: Team;
-
   selectedSport?: Sport;
   selectedTeam?: Team;
 }

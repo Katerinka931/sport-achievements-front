@@ -32,9 +32,9 @@
       <div style="height: 70%; overflow: auto; border-bottom: 1px dotted black">
         <div *ngFor="let team of teams; let i = index" class="custom-row">
           <div>
-            <input class="additional-team-item team-update" type="text" id="teamname{{team.id}}" name="teamname"
+            <input class="additional-team-item team-update" type="text" id="teamname{{team.id}}"
                    value="{{team.name}}"/>
-            <input class="additional-team-item team-update" type="text" id="count{{team.id}}" name="count" value="{{team.count}}"/>
+            <input class="additional-team-item team-update" type="text" id="count{{team.id}}" value="{{team.count}}"/>
             <select class="additional-team-item team-update"
                     id="t_sport_selector_{{team.id}}" [value]="team.selectedSport">
               <option *ngFor="let type of sports"
@@ -50,9 +50,9 @@
         </div>
       </div>
       <div class="child">
-        <input class="additional-team-item team-create" type="text" id="teamname" [(ngModel)]="newTeam.name" name="teamname"
+        <input class="additional-team-item team-create" type="text" id="teamname" [(ngModel)]="newTeam.name"
                placeholder="Название команды"/>
-        <input class="additional-team-item team-create" type="text" id="count" [(ngModel)]="newTeam.count" name="count"
+        <input class="additional-team-item team-create" type="text" id="count" [(ngModel)]="newTeam.count"
                placeholder="Количество участников"/>
         <button class="btn btn-outline-success" style="float: right; margin-left: 1%" (click)="createTeam()"> +
         </button>
@@ -90,15 +90,15 @@
       </div>
       <div class="child">
         <input class="additional-sportsman-item sportsman-create" type="text" id="lastName" [(ngModel)]="newSportsman.lastName"
-               name="lastName" placeholder="Фамилия"/>
+               placeholder="Фамилия"/>
         <input class="additional-sportsman-item sportsman-create" type="text" id="firstName" [(ngModel)]="newSportsman.firstName"
-               name="firstName" placeholder="Имя"/>
+               placeholder="Имя"/>
         <input class="additional-sportsman-item sportsman-create" type="text" id="middleName" [(ngModel)]="newSportsman.middleName"
-               name="middleName" placeholder="Отчество"/>
+               placeholder="Отчество"/>
         <input class="additional-sportsman-item sportsman-create" type="text" id="passport" [(ngModel)]="newSportsman.passport"
-               name="passport" placeholder="Паспорт"/>
+               placeholder="Паспорт"/>
         <input class="additional-sportsman-item sportsman-create" type="date" id="birthdate" [(ngModel)]="newSportsman.birthdate"
-               name="birthdate"/>
+               />
         <button type="submit" class="btn btn-outline-success" style="float: right; margin-left: 1%"
                 (click)="createSportsman()">
           +

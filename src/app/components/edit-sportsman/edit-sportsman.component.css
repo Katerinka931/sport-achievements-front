@@ -1,0 +1,60 @@
+p {
+  padding-top: 15px;
+  text-align: center;
+}
+
+.item {
+  width: 80%;
+  padding: 5px 5px 5px 3%;
+  margin: 3% 0;
+  border: 1px solid black;
+  cursor: pointer;
+  float: left;
+}
+
+.additional-contact-item {
+  margin: 1% 1%;
+  float: left;
+  display: inline;
+}
+
+.team-create{
+  width: 45.5%;
+}
+
+.contact-update {
+  width: 40%;
+}
+
+.additional-sportsman-item {
+  margin: 1% 0.5%;
+  float: left;
+}
+
+.sportsman-create{
+  width: 18%;
+}
+
+.sportsman-update {
+  width: 14%;
+}
+
+.control-button {
+  float: right;
+  margin-top: 2%;
+}
+
+.parent {
+  position: relative;
+  padding-bottom: 50px;
+}
+
+.child {
+  width: 100%;
+  position: absolute;
+  bottom: 10px;
+}
+
+.custom-row {
+  display: flex; flex-direction: column;
+}

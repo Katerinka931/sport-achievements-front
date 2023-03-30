@@ -1,1 +1,91 @@
-<p>edit-team works!</p>
+<head>
+  <title>Редактирование</title>
+</head>
+<body>
+<div class="row" style="height: 90vh; border: 1px solid gray">
+  <div class="col-2" style="height: 100%; border: 1px solid gray">
+    <p class="text-center">Команда</p>
+    <div *ngFor="let team of teams; let i = index">
+      <div (click)="selectItem(team.id!)" class="item">
+        {{team.name | titlecase}}
+      </div>
+      <button class="btn btn-outline-danger control-button" (click)="deleteTeam(team.id!)"> –
+      </button>
+    </div>
+  </div>
+  <div class="col-2 parent" style="height: 100%; border: 1px solid gray">
+    <p>Информация</p>
+    <button class="btn btn-outline-success control-button" (click)="createTeam()">+</button>
+    <div>
+      <input class="item text-capitalize" type="text" id="name" [(ngModel)]="currentTeam.name" name="name"
+             placeholder="Название"/>
+      <input class="item text-capitalize" type="text" id="count" [(ngModel)]="currentTeam.count" name="count"
+             placeholder="Количество участников"/>
+      <select class="item" id="create_team_selector" [(ngModel)]="selectedSport">
+        <option *ngFor="let type of sports"
+                [value]="type.name" [selected]="type.name == selectedSport">
+          {{ type.name }}
+        </option>
+      </select>
+    </div>
+    <div class="child" style=" bottom: 17px">
+      <button type="submit" class="btn btn-outline-primary" style="width: 90%;" (click)="editTeam()">
+        Сохранить
+      </button>
+    </div>
+    <br/>
+  </div>
+    <div class="col-8" style="height: 100%; border: 1px solid gray">
+      <div style="height: 100%;" class="parent">
+        <p>Игроки</p>
+        <div style="height: 80%; overflow: auto; border-bottom: 1px dotted black">
+          <div *ngFor="let sportsman of sportsmen; let i = index" class="custom-row">
+            <div>
+              <input class="additional-sportsman-item sportsman-update" type="text" id="lastName{{sportsman.id}}"
+                     value="{{sportsman.lastName}}"/>
+              <input class="additional-sportsman-item sportsman-update" type="text" id="firstName{{sportsman.id}}"
+                     value="{{sportsman.firstName}}"/>
+              <input class="additional-sportsman-item sportsman-update" type="text" id="middleName{{sportsman.id}}"
+                     value="{{sportsman.middleName}}"/>
+              <input class="additional-sportsman-item sportsman-update" type="text" id="passport{{sportsman.id}}"
+                     value="{{sportsman.passport}}"/>
+              <input class="additional-sportsman-item sportsman-update" type="date" id="birthdate{{sportsman.id}}"
+                     value="{{sportsman.birthdate}}"/>
+
+              <div class="additional-sportsman-item sportsman-update" style="color: red">Здесь команду?</div>
+<!--              <select class="additional-sportsman-item sportsman-update" id="team_selector_{{sportsman.id}}">-->
+<!--                <option *ngFor="let type of sports"-->
+<!--                        [value]="type.name" [selected]="type.name == sportsman.selectedSport">-->
+<!--                  {{ type.name }}-->
+<!--                </option>-->
+<!--              </select>-->
+              <button class="btn btn-outline-primary" style="float: right; margin-left: 1%"
+                      (click)="updateSportsman(sportsman.id!)"> ✏
+              </button>
+              <button class="btn btn-outline-danger" style="float: right;" (click)="deleteSportsman(sportsman.id!)"> –
+              </button>
+            </div>
+            <br/><br/>
+          </div>
+        </div>
+        <div class="child">
+          <input class="additional-sportsman-item sportsman-create" type="text" id="lastName" [(ngModel)]="newSportsman.lastName"
+                 name="lastName" placeholder="Фамилия"/>
+          <input class="additional-sportsman-item sportsman-create" type="text" id="firstName" [(ngModel)]="newSportsman.firstName"
+                 name="firstName" placeholder="Имя"/>
+          <input class="additional-sportsman-item sportsman-create" type="text" id="middleName" [(ngModel)]="newSportsman.middleName"
+                 name="middleName" placeholder="Отчество"/>
+          <input class="additional-sportsman-item sportsman-create" type="text" id="passport" [(ngModel)]="newSportsman.passport"
+                 name="passport" placeholder="Паспорт"/>
+          <input class="additional-sportsman-item sportsman-create" type="date" id="birthdate" [(ngModel)]="newSportsman.birthdate"
+                 name="birthdate"/>
+          <button type="submit" class="btn btn-outline-success" style="float: right; margin-left: 1%"
+                  (click)="createSportsman()">
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+</body>
+
