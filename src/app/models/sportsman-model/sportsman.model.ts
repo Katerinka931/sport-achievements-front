@@ -1,14 +1,17 @@
+import {Sport} from "../sport-model/sport.model";
+import {Team} from "../team-model/team.model";
+
 export class Sportsman {
-  id?: any;
+  id?: number;
   passport?: string;
   firstName?: string;
   lastName?: string;
   middleName?: string;
-  birthdate?: any;
+  birthdate?: Date;
 
-  sport?: any;
-  team?: any;
+  sport?: Sport;
+  team?: Team;
 
-  selectedSport?: any;
-  selectedTeam?: any;
+  selectedSport?: Sport;
+  selectedTeam?: Team;
 }

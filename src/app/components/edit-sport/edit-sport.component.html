@@ -6,10 +6,10 @@
   <div class="col-2" style="height: 100%; border: 1px solid gray">
     <p class="text-center">Вид спорта</p>
     <div *ngFor="let sport of sports; let i = index">
-      <div (click)="selectItem(sport.id)" class="item">
+      <div (click)="selectItem(sport.id!)" class="item">
         {{sport.name}}
       </div>
-      <button class="btn btn-outline-danger control-button" (click)="deleteSport(sport.id)"> –
+      <button class="btn btn-outline-danger control-button" (click)="deleteSport(sport.id!)"> –
       </button>
     </div>
   </div>
@@ -42,10 +42,10 @@
                 {{ type.name }}
               </option>
             </select>
-            <button class="btn btn-outline-primary" style="float: right; margin-left: 1%" (click)="updateTeam(team.id)">
+            <button class="btn btn-outline-primary" style="float: right; margin-left: 1%" (click)="updateTeam(team.id!)">
               ✏
             </button>
-            <button class="btn btn-outline-danger" style="float: right;" (click)="deleteTeam(team.id)"> –</button>
+            <button class="btn btn-outline-danger" style="float: right;" (click)="deleteTeam(team.id!)"> –</button>
           </div>
         </div>
       </div>
@@ -80,9 +80,9 @@
               </option>
             </select>
             <button class="btn btn-outline-primary" style="float: right; margin-left: 1%"
-                    (click)="updateSportsman(sportsman.id)"> ✏
+                    (click)="updateSportsman(sportsman.id!)"> ✏
             </button>
-            <button class="btn btn-outline-danger" style="float: right;" (click)="deleteSportsman(sportsman.id)"> –
+            <button class="btn btn-outline-danger" style="float: right;" (click)="deleteSportsman(sportsman.id!)"> –
             </button>
           </div>
           <br/><br/>

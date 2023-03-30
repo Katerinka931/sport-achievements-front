@@ -1,9 +1,11 @@
+import {Sport} from "../sport-model/sport.model";
+
 export class Team {
-  id?: any;
+  id?: number;
   name?: string;
   count?: number;
 
-  teamsSport?: any;
+  teamsSport?: Sport;
 
-  selectedSport?: any;
+  selectedSport?: Sport;
 }

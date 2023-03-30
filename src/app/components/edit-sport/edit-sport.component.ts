@@ -30,12 +30,12 @@ export class EditSportComponent {
     firstName: '',
     lastName: '',
     middleName: '',
-    birthdate: ''
+    birthdate: new Date()
   }
 
-  selected: any;
+  selected: string;
 
-  constructor(private sportService: SportService, private teamService: TeamService, private sportsmanService: SportsmanService) {
+  constructor(private sportService: SportService) {
   }
 
   ngOnInit(): void {
@@ -46,14 +46,14 @@ export class EditSportComponent {
     this.sportService.getAll().subscribe({
       next: (data) => {
         this.sports = data;
-        this.selectItem(this.currentSport.id)
+        this.selectItem(this.currentSport.id!)
       }, error: (e) => {
         console.log(e);
       }
     });
   }
 
-  selectItem(id: any) {
+  selectItem(id: number) {
     let sport = this.sports.find(function (item) {
       return item.id == id;
     })!;
@@ -62,7 +62,7 @@ export class EditSportComponent {
     this.currentSport.id = sport.id;
     this.currentSport.name = sport.name;
 
-    this.selected = this.currentSport.name;
+    this.selected = this.currentSport.name!;
 
     this.teams = sport['teams'];
     this.sportsmen = sport['sportsmen']
@@ -77,7 +77,7 @@ export class EditSportComponent {
   }
 
   editSport() {
-    this.sportService.updateSport(this.currentSport.id, this.currentSport).subscribe({
+    this.sportService.updateSport(this.currentSport.id!, this.currentSport).subscribe({
       next: (data) => {
         this.retrieve();
       },
@@ -102,7 +102,7 @@ export class EditSportComponent {
       });
   }
 
-  deleteSport(id: any) {
+  deleteSport(id: number) {
     this.sportService.deleteSport(id).subscribe({
       next: (res) => {
         this.retrieve();
@@ -113,8 +113,8 @@ export class EditSportComponent {
     });
   }
 
-  deleteTeam(id: any) {
-    this.teamService.deleteTeam(id).subscribe({
+  deleteTeam(id: number) {
+    this.sportService.deleteTeam(id).subscribe({
       next: (res) => {
         this.retrieve();
       },
@@ -124,7 +124,7 @@ export class EditSportComponent {
     })
   }
 
-  getSelectedSport(selector: any) {
+  getSelectedSport(selector: string) {
     let sport = this.sports.find(function (item) {
       return item.name == selector;
     })!;
@@ -142,7 +142,7 @@ export class EditSportComponent {
       count: count,
     };
 
-    this.sportService.updateTeam(sport_id, id, data)
+    this.sportService.updateTeam(sport_id!, id, data)
       .subscribe({
         next: (res) => {
           this.retrieve();
@@ -158,7 +158,7 @@ export class EditSportComponent {
       name: this.newTeam.name?.toLowerCase(),
       count: this.newTeam.count,
     };
-    this.sportService.createTeam(this.currentSport.id, data).subscribe({
+    this.sportService.createTeam(this.currentSport.id!, data).subscribe({
       next: (res) => {
         this.retrieve();
         this.newTeam = new Team();
@@ -169,8 +169,8 @@ export class EditSportComponent {
     });
   }
 
-  deleteSportsman(id: any) {
-    this.sportsmanService.deleteSportsman(id).subscribe({
+  deleteSportsman(id: number) {
+    this.sportService.deleteSportsman(id).subscribe({
       next: (res) => {
         this.retrieve();
       },
@@ -180,7 +180,7 @@ export class EditSportComponent {
     })
   }
 
-  updateSportsman(id: any) {
+  updateSportsman(id: number) {
     let firstName = document.getElementById("firstName" + id)!['value'];
     let lastName = document.getElementById("lastName" + id)!['value'];
     let middleName = document.getElementById("middleName" + id)!['value'];
@@ -198,7 +198,7 @@ export class EditSportComponent {
       birthdate: birthdate
     };
 
-    this.sportService.updateSportsman(sport_id, id, data)
+    this.sportService.updateSportsman(sport_id!, id, data)
       .subscribe({
         next: (res) => {
           this.retrieve();
@@ -217,7 +217,7 @@ export class EditSportComponent {
       passport: this.newSportsman.passport,
       birthdate: this.newSportsman.birthdate
     };
-    this.sportService.createSportsman(this.currentSport.id, data).subscribe({
+    this.sportService.createSportsman(this.currentSport.id!, data).subscribe({
       next: (res) => {
         this.retrieve();
         this.newSportsman = new Sportsman();

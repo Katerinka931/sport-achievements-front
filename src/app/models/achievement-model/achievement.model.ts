@@ -1,5 +1,5 @@
 export class Achievement {
-  id?: any;
+  id?: number;
   name?: string;
   recvDate?: any;
 

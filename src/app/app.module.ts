@@ -7,8 +7,6 @@ import { SportsListComponent } from './components/sports-list/sports-list.compon
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TeamsListComponent } from './components/teams-list/teams-list.component';
-import { SportsmenListComponent } from './components/sportsmen-list/sportsmen-list.component';
 import {MatTreeModule} from "@angular/material/tree";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -21,8 +19,6 @@ import {EditSportComponent} from "./components/edit-sport/edit-sport.component";
   declarations: [
     AppComponent,
     SportsListComponent,
-    TeamsListComponent,
-    SportsmenListComponent,
     EditSportsmanComponent,
     EditTeamComponent,
     EditSportComponent
