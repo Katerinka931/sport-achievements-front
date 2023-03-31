@@ -4,7 +4,10 @@
 <body>
 <div class="row" style="height: 90vh; border: 1px solid gray">
   <div class="col-2" style="height: 100%; border: 1px solid gray">
-    <p class="text-center">Команда</p>
+    <p class="text-center">Спортсмен</p>
+    <div *ngIf="sportsmen == undefined || sportsmen.length == 0">
+      Список игроков пуст. <br/> Создайте первого!
+    </div>
     <div *ngFor="let sportsman of sportsmen; let i = index">
       <div (click)="selectItem(sportsman.id!)" class="item">
         {{sportsman.lastName | titlecase}} {{sportsman.firstName | titlecase}} {{sportsman.middleName | titlecase}}
@@ -27,19 +30,26 @@
              name="middleName" placeholder="Отчество"/>
       <input class="item" type="date" id="birthdate" [(ngModel)]="currentSportsman.birthdate" name="birthdate"/>
 
-
-      <select class="item" id="create_team_selector" [(ngModel)]="selectedTeam">
-        <option *ngFor="let type of teams"
-                [value]="type.name" [selected]="type.name == selectedTeam">
-          {{ type.name }}
-        </option>
-      </select>
-      <select class="item" id="create_sport_selector" [(ngModel)]="selectedSport">
-      <option *ngFor="let type of sports"
-              [value]="type.name" [selected]="type.name == selectedSport">
-        {{ type.name }}
-      </option>
-    </select>
+      <div class="checkbox-item">
+        <input type="checkbox" id="checkbox" name="checkbox" [(ngModel)]="isChecked" (click)="check()">
+        <label for="checkbox" style="margin-left: 10px">Командный игрок</label>
+      </div>
+      <div *ngIf="isChecked; else sportTemplate">
+        <select class="item" id="create_team_selector" [(ngModel)]="selectedTeam">
+          <option *ngFor="let type of teams"
+                  [value]="type.name" [selected]="type.name == selectedTeam">
+            {{ type.name }}
+          </option>
+        </select>
+      </div>
+      <ng-template #sportTemplate>
+        <select class="item" id="create_sport_selector" [(ngModel)]="selectedSport">
+          <option *ngFor="let type of sports"
+                  [value]="type.name" [selected]="type.name == selectedSport">
+            {{ type.name }}
+          </option>
+        </select>
+      </ng-template>
     </div>
     <div class="child" style=" bottom: 17px">
       <button type="submit" class="btn btn-outline-primary" style="width: 90%;" (click)="editSportsman()">
@@ -52,6 +62,9 @@
     <div style="height: 50%; border-bottom: 1px solid black;" class="parent">
       <p>Контакты</p>
       <div style="height: 70%; overflow: auto; border-bottom: 1px dotted black">
+        <div *ngIf="contacts == undefined || contacts.length == 0">
+          Список контактов пуст. <br/> Выберите игрока или создайте новый контакт!
+        </div>
         <div *ngFor="let contact of contacts; let i = index" class="custom-row">
           <div>
             <input class="additional-contact-item contact-update" type="text" id="phone{{contact.id}}"
@@ -79,17 +92,19 @@
     <div style="height: 50%;" class="parent">
       <p>Достижения</p>
       <div style="height: 70%; overflow: auto; border-bottom: 1px dotted black">
+        <div *ngIf="achievements == undefined || achievements.length == 0">
+          Список достижений пуст. <br/> Выберите игрока или создайте достижение!
+        </div>
         <div *ngFor="let ach of achievements; let i = index" class="custom-row">
           <div>
-
             <input class="additional-contact-item contact-update" type="text" id="name{{ach.id}}"
                    value="{{ach.name}}"/>
-            <input class="additional-contact-item contact-update" type="text" id="recvDate{{ach.id}}"
+            <input class="additional-contact-item contact-update" type="date" id="recvDate{{ach.id}}"
                    value="{{ach.recvDate}}"/>
             <button class="btn btn-outline-primary" style="float: right; margin-left: 1%"
                     (click)="updateAchievement(ach.id!)"> ✏
             </button>
-            <button class="btn btn-outline-danger" style="float: right;" (click)="deleteSportsman(ach.id!)"> –
+            <button class="btn btn-outline-danger" style="float: right;" (click)="deleteAchievement(ach.id!)"> –
             </button>
           </div>
           <br/><br/>
@@ -98,9 +113,10 @@
       <div class="child">
         <input class="additional-contact-item contact-update" type="text" id="name" [(ngModel)]="newAchievement.name"
                placeholder="Название"/>
-        <input class="additional-contact-item contact-update" type="date" id="recvDate" [(ngModel)]="newAchievement.recvDate"/>
+        <input class="additional-contact-item contact-update" type="date" id="recvDate"
+               [(ngModel)]="newAchievement.recvDate"/>
         <button type="submit" class="btn btn-outline-success" style="float: right; margin-left: 1%"
-                (click)="createSportsman()">
+                (click)="createAchievement()">
           +
         </button>
       </div>

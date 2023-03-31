@@ -5,6 +5,9 @@
 <div class="row" style="height: 90vh; border: 1px solid gray">
   <div class="col-2" style="height: 100%; border: 1px solid gray">
     <p class="text-center">Вид спорта</p>
+    <div *ngIf="sports == undefined || sports.length == 0">
+      Список видов спорта пуст. <br/> Создайте первый!
+    </div>
     <div *ngFor="let sport of sports; let i = index">
       <div (click)="selectItem(sport.id!)" class="item">
         {{sport.name}}
@@ -30,6 +33,9 @@
     <div style="height: 50%; border-bottom: 1px solid black;" class="parent">
       <p>Команды</p>
       <div style="height: 70%; overflow: auto; border-bottom: 1px dotted black">
+        <div *ngIf="teams == undefined || teams.length == 0">
+          Список команд пуст. <br/> Выберите вид спорта или создайте команду.
+        </div>
         <div *ngFor="let team of teams; let i = index" class="custom-row">
           <div>
             <input class="additional-team-item team-update" type="text" id="teamname{{team.id}}"
@@ -42,7 +48,8 @@
                 {{ type.name }}
               </option>
             </select>
-            <button class="btn btn-outline-primary" style="float: right; margin-left: 1%" (click)="updateTeam(team.id!)">
+            <button class="btn btn-outline-primary" style="float: right; margin-left: 1%"
+                    (click)="updateTeam(team.id!)">
               ✏
             </button>
             <button class="btn btn-outline-danger" style="float: right;" (click)="deleteTeam(team.id!)"> –</button>
@@ -61,6 +68,9 @@
     <div style="height: 50%;" class="parent">
       <p>Игроки</p>
       <div style="height: 70%; overflow: auto; border-bottom: 1px dotted black">
+        <div *ngIf="sportsmen == undefined || sportsmen.length == 0">
+          Список игроков пуст. <br/> Выберите вид спорта или создайте игрока.
+        </div>
         <div *ngFor="let sportsman of sportsmen; let i = index" class="custom-row">
           <div>
             <input class="additional-sportsman-item sportsman-update" type="text" id="lastName{{sportsman.id}}"
@@ -89,16 +99,21 @@
         </div>
       </div>
       <div class="child">
-        <input class="additional-sportsman-item sportsman-create" type="text" id="lastName" [(ngModel)]="newSportsman.lastName"
+        <input class="additional-sportsman-item sportsman-create" type="text" id="lastName"
+               [(ngModel)]="newSportsman.lastName"
                placeholder="Фамилия"/>
-        <input class="additional-sportsman-item sportsman-create" type="text" id="firstName" [(ngModel)]="newSportsman.firstName"
+        <input class="additional-sportsman-item sportsman-create" type="text" id="firstName"
+               [(ngModel)]="newSportsman.firstName"
                placeholder="Имя"/>
-        <input class="additional-sportsman-item sportsman-create" type="text" id="middleName" [(ngModel)]="newSportsman.middleName"
+        <input class="additional-sportsman-item sportsman-create" type="text" id="middleName"
+               [(ngModel)]="newSportsman.middleName"
                placeholder="Отчество"/>
-        <input class="additional-sportsman-item sportsman-create" type="text" id="passport" [(ngModel)]="newSportsman.passport"
+        <input class="additional-sportsman-item sportsman-create" type="text" id="passport"
+               [(ngModel)]="newSportsman.passport"
                placeholder="Паспорт"/>
-        <input class="additional-sportsman-item sportsman-create" type="date" id="birthdate" [(ngModel)]="newSportsman.birthdate"
-               />
+        <input class="additional-sportsman-item sportsman-create" type="date" id="birthdate"
+               [(ngModel)]="newSportsman.birthdate"
+        />
         <button type="submit" class="btn btn-outline-success" style="float: right; margin-left: 1%"
                 (click)="createSportsman()">
           +

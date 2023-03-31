@@ -78,7 +78,6 @@ export class EditTeamComponent {
 
         this.selectedTeam = this.currentTeam.name!;
         this.sportsmen = team['sportsmen'];
-        console.log(this.sportsmen)
       },
       error: (e) => {
       }
@@ -97,12 +96,18 @@ export class EditTeamComponent {
     });
   }
 
-
   getSelectedSport(selector: string) {
     let sport = this.sports.find(function (item) {
       return item.name == selector;
     })!;
     return sport.id;
+  }
+
+  getSelectedTeam(selector: string) {
+    let team = this.teams.find(function (item) {
+      return item.name == selector;
+    })!;
+    return team.id;
   }
 
   createTeam() {
@@ -139,8 +144,8 @@ export class EditTeamComponent {
     let passport = document.getElementById("passport" + id)!['value'];
     let birthdate = document.getElementById("birthdate" + id)!['value'];
 
-    // let selector = document.getElementById("team_selector_" + id)!['value'];
-    // let team_id = this.getSelectedSport(selector);
+    let selector = document.getElementById("team_selector_" + id)!['value'];
+    let team_id = this.getSelectedTeam(selector);
 
     const data = {
       firstName: firstName,
@@ -150,7 +155,7 @@ export class EditTeamComponent {
       birthdate: birthdate
     };
 
-    this.teamService.updateSportsman(this.currentTeam.id!, id, data)
+    this.teamService.updateSportsman(team_id!, id, data)
       .subscribe({
         next: (res) => {
           this.retrieve();
