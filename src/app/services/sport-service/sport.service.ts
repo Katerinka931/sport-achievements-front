@@ -4,53 +4,56 @@ import {Observable} from "rxjs";
 import {Sport} from "../../models/sport-model/sport.model";
 import {Team} from "../../models/team-model/team.model";
 import {Sportsman} from "../../models/sportsman-model/sportsman.model";
-
-const baseUrl = 'http://localhost:8080/api/sport';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SportService {
 
-  constructor(private http: HttpClient) { }
+  private baseUrl = environment.apiUrl + '/sport'
+
+  constructor(private http: HttpClient) {
+
+  }
 
   getAll(): Observable<Sport[]> {
-    return this.http.get<Sport[]>(baseUrl + '/main');
+    return this.http.get<Sport[]>(this.baseUrl + '/main');
   }
 
   deleteSport(id: number): Observable<Sport> {
-    return this.http.delete(`${baseUrl}/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
   createSport(data: Sport): Observable<Sport> {
-    return this.http.post(baseUrl, data);
+    return this.http.post(this.baseUrl, data);
   }
 
   updateSport(id: number, data: Sport): Observable<Sport> {
-    return this.http.put(`${baseUrl}/${id}`, data);
+    return this.http.put(`${this.baseUrl}/${id}`, data);
   }
 
   updateTeam(sport_id: number, team_id: number, data: Team): Observable<Team> {
-    return this.http.put(`${baseUrl}/${sport_id}/team/${team_id}`, data);
+    return this.http.put(`${this.baseUrl}/${sport_id}/team/${team_id}`, data);
   }
 
   createTeam(sport_id: number, data: Team) {
-    return this.http.post(`${baseUrl}/${sport_id}/team`, data);
+    return this.http.post(`${this.baseUrl}/${sport_id}/team`, data);
   }
 
   deleteTeam(id: number): Observable<Team> {
-    return this.http.delete(`${baseUrl}/team/${id}`);
+    return this.http.delete(`${this.baseUrl}/team/${id}`);
   }
 
   updateSportsman(sport_id: number, sportsman_id: number, data: Sportsman): Observable<Sportsman>{
-    return this.http.put(`${baseUrl}/${sport_id}/sportsman/${sportsman_id}`, data);
+    return this.http.put(`${this.baseUrl}/${sport_id}/sportsman/${sportsman_id}`, data);
   }
 
   createSportsman(sport_id: number, data: Sportsman){
-    return this.http.post(`${baseUrl}/${sport_id}/sportsman`, data);
+    return this.http.post(`${this.baseUrl}/${sport_id}/sportsman`, data);
   }
 
   deleteSportsman(id: number): Observable<Sportsman> {
-    return this.http.delete(`${baseUrl}/sportsmen/${id}`);
+    return this.http.delete(`${this.baseUrl}/sportsmen/${id}`);
   }
 }

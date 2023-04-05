@@ -2,7 +2,7 @@
   <title>Редактирование</title>
 </head>
 <body>
-<div class="row" style="height: 90vh; border: 1px solid gray">
+<div class="row" style="height: 86vh; border: 1px solid gray">
   <div class="col-2" style="height: 100%; border: 1px solid gray">
     <p class="text-center">Вид спорта</p>
     <div *ngIf="sports == undefined || sports.length == 0">
@@ -50,7 +50,7 @@
             </select>
             <button class="btn btn-outline-primary" style="float: right; margin-left: 1%"
                     (click)="updateTeam(team.id!)">
-              ✏
+              💾
             </button>
             <button class="btn btn-outline-danger" style="float: right;" (click)="deleteTeam(team.id!)"> –</button>
           </div>
@@ -90,7 +90,7 @@
               </option>
             </select>
             <button class="btn btn-outline-primary" style="float: right; margin-left: 1%"
-                    (click)="updateSportsman(sportsman.id!)"> ✏
+                    (click)="updateSportsman(sportsman.id!)"> 💾
             </button>
             <button class="btn btn-outline-danger" style="float: right;" (click)="deleteSportsman(sportsman.id!)"> –
             </button>

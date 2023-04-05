@@ -9,7 +9,6 @@ import {Component, OnInit} from '@angular/core';
 })
 export class SportsListComponent implements OnInit {
   sports?: Sport[];
-
   constructor(private sportService: SportService) {
   }
 
@@ -23,6 +22,7 @@ export class SportsListComponent implements OnInit {
         this.sports = data;
       }, error: (e) => {
         console.log(e);
+        confirm('Ошибка сервера \nСтатус ошибки ' + e.status)
       }
     });
   }
