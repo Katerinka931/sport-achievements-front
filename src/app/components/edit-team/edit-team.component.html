@@ -47,12 +47,12 @@
           </div>
           <div *ngFor="let sportsman of sportsmen; let i = index" class="custom-row">
             <div>
-              <input class="additional-sportsman-item sportsman-update" type="text" id="lastName{{sportsman.id}}"
-                     value="{{sportsman.lastName}}"/>
-              <input class="additional-sportsman-item sportsman-update" type="text" id="firstName{{sportsman.id}}"
-                     value="{{sportsman.firstName}}"/>
-              <input class="additional-sportsman-item sportsman-update" type="text" id="middleName{{sportsman.id}}"
-                     value="{{sportsman.middleName}}"/>
+              <input class="additional-sportsman-item sportsman-update text-capitalize" type="text" id="lastName{{sportsman.id}}"
+                     value="{{sportsman.lastName | titlecase}}"/>
+              <input class="additional-sportsman-item sportsman-update text-capitalize" type="text" id="firstName{{sportsman.id}}"
+                     value="{{sportsman.firstName | titlecase}}"/>
+              <input class="additional-sportsman-item sportsman-update text-capitalize" type="text" id="middleName{{sportsman.id}}"
+                     value="{{sportsman.middleName | titlecase}}"/>
               <input class="additional-sportsman-item sportsman-update" type="text" id="passport{{sportsman.id}}"
                      value="{{sportsman.passport}}"/>
               <input class="additional-sportsman-item sportsman-update" type="date" id="birthdate{{sportsman.id}}"
@@ -73,11 +73,11 @@
           </div>
         </div>
         <div class="child">
-          <input class="additional-sportsman-item sportsman-create" type="text" id="lastName" [(ngModel)]="newSportsman.lastName"
+          <input class="additional-sportsman-item sportsman-create text-capitalize" type="text" id="lastName" [(ngModel)]="newSportsman.lastName"
                  name="lastName" placeholder="Фамилия"/>
-          <input class="additional-sportsman-item sportsman-create" type="text" id="firstName" [(ngModel)]="newSportsman.firstName"
+          <input class="additional-sportsman-item sportsman-create text-capitalize" type="text" id="firstName" [(ngModel)]="newSportsman.firstName"
                  name="firstName" placeholder="Имя"/>
-          <input class="additional-sportsman-item sportsman-create" type="text" id="middleName" [(ngModel)]="newSportsman.middleName"
+          <input class="additional-sportsman-item sportsman-create text-capitalize" type="text" id="middleName" [(ngModel)]="newSportsman.middleName"
                  name="middleName" placeholder="Отчество"/>
           <input class="additional-sportsman-item sportsman-create" type="text" id="passport" [(ngModel)]="newSportsman.passport"
                  name="passport" placeholder="Паспорт"/>

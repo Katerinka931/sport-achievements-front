@@ -84,32 +84,6 @@ export class EditTeamComponent {
     });
   }
 
-  deleteTeam(id: number) {
-    this.teamService.deleteTeam(id).subscribe({
-      next: (res) => {
-        this.retrieve();
-        this.clean();
-      },
-      error: (e) => {
-        console.log(e);
-      }
-    });
-  }
-
-  getSelectedSport(selector: string) {
-    let sport = this.sports.find(function (item) {
-      return item.name == selector;
-    })!;
-    return sport.id;
-  }
-
-  getSelectedTeam(selector: string) {
-    let team = this.teams.find(function (item) {
-      return item.name == selector;
-    })!;
-    return team.id;
-  }
-
   createTeam() {
     const data = {
       name: this.currentTeam.name?.toLowerCase(),
@@ -121,18 +95,63 @@ export class EditTeamComponent {
           this.retrieve();
         },
         error: (e) => {
-          console.error(e);
+          confirm('Команда с таким названием уже существует')
         }
       });
+  }
+
+  createSportsman() {
+    const data = {
+      firstName: this.newSportsman.firstName,
+      lastName: this.newSportsman.lastName,
+      middleName: this.newSportsman.middleName,
+      passport: this.newSportsman.passport,
+      birthdate: this.newSportsman.birthdate
+    };
+    this.teamService.createSportsman(this.currentTeam.id!, data).subscribe({
+      next: (res) => {
+        this.retrieve();
+        this.newSportsman = new Sportsman();
+      },
+      error: (e) => {
+        confirm('Спортсмен с такими паспортными данными уже существует')
+      }
+    });
+  }
+
+  deleteTeam(id: number) {
+    this.teamService.deleteTeam(id).subscribe({
+      next: (res) => {
+        this.retrieve();
+        this.clean();
+        confirm('Удаление успешно')
+      },
+      error: (e) => {
+        confirm('Удаление не удалось')
+      }
+    });
+  }
+
+  deleteSportsman(id: number) {
+    this.sportService.deleteSportsman(id).subscribe({
+      next: (res) => {
+        this.retrieve();
+        confirm('Удаление успешно')
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    })
   }
 
   editTeam() {
     this.sportService.updateTeam(this.getSelectedSport(this.selectedSport)!, this.currentTeam.id!, this.currentTeam).subscribe({
       next: (data) => {
         this.retrieve();
+        confirm('Редактирование успешно. Команда будет перезаписана в конец списка')
       },
       error: (e) => {
-        console.log(e);
+        confirm('Редактирование не удалось. Команда с таким названием уже существует')
       }
     });
   }
@@ -159,41 +178,26 @@ export class EditTeamComponent {
       .subscribe({
         next: (res) => {
           this.retrieve();
+          confirm('Редактирование успешно. Спортсмен будет перезаписан в конец списка')
         },
         error: (e) => {
-          console.error(e);
+          confirm('Редактирование не удалось. \nСпортсмен с такими паспортными данными уже существует')
         }
       });
   }
 
-  deleteSportsman(id: number) {
-    this.sportService.deleteSportsman(id).subscribe({
-      next: (res) => {
-        this.retrieve();
-      },
-      error: (e) => {
-        console.log(e);
-      }
-    })
+  getSelectedSport(selector: string) {
+    let sport = this.sports.find(function (item) {
+      return item.name == selector;
+    })!;
+    return sport.id;
   }
 
-  createSportsman() {
-    const data = {
-      firstName: this.newSportsman.firstName,
-      lastName: this.newSportsman.lastName,
-      middleName: this.newSportsman.middleName,
-      passport: this.newSportsman.passport,
-      birthdate: this.newSportsman.birthdate
-    };
-    this.teamService.createSportsman(this.currentTeam.id!, data).subscribe({
-      next: (res) => {
-        this.retrieve();
-        this.newSportsman = new Sportsman();
-      },
-      error: (e) => {
-        console.error(e);
-      }
-    });
+  getSelectedTeam(selector: string) {
+    let team = this.teams.find(function (item) {
+      return item.name == selector;
+    })!;
+    return team.id;
   }
 
   private clean(): void {

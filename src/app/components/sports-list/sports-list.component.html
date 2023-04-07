@@ -24,9 +24,9 @@
                   </h2>
                   <div id="collapse{{team.name}}" class="accordion-collapse collapse" aria-labelledby="headingTeam">
                     <div class="accordion-body">
-                    <div *ngFor="let sportsman of team['sportsmen']; let i = index">
-                      {{sportsman.lastName | titlecase}} {{sportsman.firstName | titlecase}} {{sportsman.middleName | titlecase}}
-                    </div>
+                      <div *ngFor="let sportsman of team['sportsmen']; let i = index">
+                        {{sportsman.lastName | titlecase}} {{sportsman.firstName | titlecase}} {{sportsman.middleName | titlecase}}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -46,17 +46,28 @@
                   <div id="collapse{{sportsman.id}}" class="accordion-collapse collapse" aria-labelledby="headingOne">
                     <div class="accordion-body">
                       <div class="text-center">Контакты</div>
-                      Телефон: <br/>
-                      <div *ngFor="let contact of sportsman['contacts']">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{contact.phone}} <br>
-                      </div>
-                      Электронная почта: <br/>
-                      <div *ngFor="let contact of sportsman['contacts']">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{contact.email}} <br>
+                      <div style="margin: 10px 10px; border: 1px solid lightgray" class="row align-items-start">
+                        <div class="col">
+                        Телефон: <br/>
+                        <div *ngFor="let contact of sportsman['contacts']">
+                          &nbsp;&nbsp;&nbsp;&nbsp;{{contact.phone}} <br>
+                        </div>
+                        Электронная почта: <br/>
+                        <div *ngFor="let contact of sportsman['contacts']">
+                          &nbsp;&nbsp;&nbsp;&nbsp;{{contact.email}} <br>
+                        </div>
+                        </div>
                       </div>
                       <div class="text-center">Достижения</div>
                       <div *ngFor="let ach of sportsman['achievements']">
-                        {{ach.name}}
+                        <div style="margin: 10px 10px; border: 1px solid lightgray" class="row align-items-start">
+                          <div class="col">
+                            Название награды: {{ach.name}}
+                          </div>
+                          <div class="col">
+                            Дата получения: {{ach.recvDate | date:'yyyy-MM-dd'}}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

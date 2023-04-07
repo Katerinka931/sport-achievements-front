@@ -10,7 +10,7 @@
     </div>
     <div *ngFor="let sport of sports; let i = index">
       <div (click)="selectItem(sport.id!)" class="item">
-        {{sport.name}}
+        {{sport.name | titlecase}}
       </div>
       <button class="btn btn-outline-danger control-button" (click)="deleteSport(sport.id!)"> –
       </button>
@@ -19,7 +19,7 @@
   <div class="col-2 parent" style="height: 100%; border: 1px solid gray">
     <p>Информация</p>
     <div>
-      <input class="item" type="text" id="sport" [(ngModel)]="currentSport.name" name="sport"/>
+      <input class="item text-capitalize" type="text" id="sport" [(ngModel)]="currentSport.name" name="sport"/>
       <button class="btn btn-outline-success control-button" (click)="createSport()"> +</button>
     </div>
     <div class="child" style=" bottom: 17px">
@@ -38,7 +38,7 @@
         </div>
         <div *ngFor="let team of teams; let i = index" class="custom-row">
           <div>
-            <input class="additional-team-item team-update" type="text" id="teamname{{team.id}}"
+            <input class="additional-team-item team-update text-capitalize" type="text" id="teamname{{team.id}}"
                    value="{{team.name}}"/>
             <input class="additional-team-item team-update" type="text" id="count{{team.id}}" value="{{team.count}}"/>
             <select class="additional-team-item team-update"
@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="child">
-        <input class="additional-team-item team-create" type="text" id="teamname" [(ngModel)]="newTeam.name"
+        <input class="additional-team-item team-create text-capitalize" type="text" id="teamname" [(ngModel)]="newTeam.name"
                placeholder="Название команды"/>
         <input class="additional-team-item team-create" type="text" id="count" [(ngModel)]="newTeam.count"
                placeholder="Количество участников"/>
@@ -73,11 +73,11 @@
         </div>
         <div *ngFor="let sportsman of sportsmen; let i = index" class="custom-row">
           <div>
-            <input class="additional-sportsman-item sportsman-update" type="text" id="lastName{{sportsman.id}}"
+            <input class="additional-sportsman-item sportsman-update text-capitalize" type="text" id="lastName{{sportsman.id}}"
                    value="{{sportsman.lastName}}"/>   <!--[(ngModel)]=""-->
-            <input class="additional-sportsman-item sportsman-update" type="text" id="firstName{{sportsman.id}}"
+            <input class="additional-sportsman-item sportsman-update text-capitalize" type="text" id="firstName{{sportsman.id}}"
                    value="{{sportsman.firstName}}"/>
-            <input class="additional-sportsman-item sportsman-update" type="text" id="middleName{{sportsman.id}}"
+            <input class="additional-sportsman-item sportsman-update text-capitalize" type="text" id="middleName{{sportsman.id}}"
                    value="{{sportsman.middleName}}"/>
             <input class="additional-sportsman-item sportsman-update" type="text" id="passport{{sportsman.id}}"
                    value="{{sportsman.passport}}"/>
@@ -99,13 +99,13 @@
         </div>
       </div>
       <div class="child">
-        <input class="additional-sportsman-item sportsman-create" type="text" id="lastName"
+        <input class="additional-sportsman-item sportsman-create text-capitalize" type="text" id="lastName"
                [(ngModel)]="newSportsman.lastName"
                placeholder="Фамилия"/>
-        <input class="additional-sportsman-item sportsman-create" type="text" id="firstName"
+        <input class="additional-sportsman-item sportsman-create text-capitalize" type="text" id="firstName"
                [(ngModel)]="newSportsman.firstName"
                placeholder="Имя"/>
-        <input class="additional-sportsman-item sportsman-create" type="text" id="middleName"
+        <input class="additional-sportsman-item sportsman-create text-capitalize" type="text" id="middleName"
                [(ngModel)]="newSportsman.middleName"
                placeholder="Отчество"/>
         <input class="additional-sportsman-item sportsman-create" type="text" id="passport"

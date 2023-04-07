@@ -1,4 +1,4 @@
 export class Sport {
   id?: number;
-  name ?: string;
+  name?: string;
 }

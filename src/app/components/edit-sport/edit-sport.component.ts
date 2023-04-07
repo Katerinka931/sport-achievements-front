@@ -3,8 +3,6 @@ import {Sport} from "../../models/sport-model/sport.model";
 import {SportService} from "../../services/sport-service/sport.service";
 import {Sportsman} from "../../models/sportsman-model/sportsman.model";
 import {Team} from "../../models/team-model/team.model";
-import {TeamService} from "../../services/team-service/team.service";
-import {SportsmanService} from "../../services/sportsman-service/sportsman.service";
 
 @Component({
   selector: 'app-edit-sport',
@@ -70,23 +68,6 @@ export class EditSportComponent {
     this.setSelectedSport(this.sportsmen);
   }
 
-  setSelectedSport(list: any){
-    for (var t in list) {
-      list[t].selectedSport = this.currentSport.name;
-    }
-  }
-
-  editSport() {
-    this.sportService.updateSport(this.currentSport.id!, this.currentSport).subscribe({
-      next: (data) => {
-        this.retrieve();
-      },
-      error: (e) => {
-        console.log(e);
-      }
-    });
-  }
-
   createSport() {
     const data = {
       name: this.currentSport.name?.toLowerCase()
@@ -97,9 +78,44 @@ export class EditSportComponent {
           this.retrieve();
         },
         error: (e) => {
-          console.error(e);
+          confirm('Такой вид спорта уже существует')
         }
       });
+  }
+
+  createTeam() {
+    const data = {
+      name: this.newTeam.name?.toLowerCase(),
+      count: this.newTeam.count,
+    };
+    this.sportService.createTeam(this.currentSport.id!, data).subscribe({
+      next: (res) => {
+        this.retrieve();
+        this.newTeam = new Team();
+      },
+      error: (e) => {
+        confirm('Команда с таким названием уже существует')
+      }
+    });
+  }
+
+  createSportsman() {
+    const data = {
+      firstName: this.newSportsman.firstName,
+      lastName: this.newSportsman.lastName,
+      middleName: this.newSportsman.middleName,
+      passport: this.newSportsman.passport,
+      birthdate: this.newSportsman.birthdate
+    };
+    this.sportService.createSportsman(this.currentSport.id!, data).subscribe({
+      next: (res) => {
+        this.retrieve();
+        this.newSportsman = new Sportsman();
+      },
+      error: (e) => {
+        confirm('Создать спортсмена не удалось. \nСпортсмен с такими паспортными данными уже существует')
+      }
+    });
   }
 
   deleteSport(id: number) {
@@ -107,9 +123,10 @@ export class EditSportComponent {
       next: (res) => {
         this.retrieve();
         this.clean();
+        confirm('Удаление успешно')
       },
       error: (e) => {
-        console.log(e);
+        confirm('Элемент не удалён. \nСтатус ошибки ' + e.status)
       }
     });
   }
@@ -118,18 +135,36 @@ export class EditSportComponent {
     this.sportService.deleteTeam(id).subscribe({
       next: (res) => {
         this.retrieve();
+        confirm('Удаление успешно')
       },
       error: (e) => {
-        console.log(e);
+        confirm('Элемент не удалён. \nСтатус ошибки ' + e.status)
       }
     })
   }
 
-  getSelectedSport(selector: string) {
-    let sport = this.sports.find(function (item) {
-      return item.name == selector;
-    })!;
-    return sport.id;
+  deleteSportsman(id: number) {
+    this.sportService.deleteSportsman(id).subscribe({
+      next: (res) => {
+        this.retrieve();
+        confirm('Удаление успешно')
+      },
+      error: (e) => {
+        confirm('Элемент не удалён. \nСтатус ошибки ' + e.status)
+      }
+    })
+  }
+
+  editSport() {
+    this.sportService.updateSport(this.currentSport.id!, this.currentSport).subscribe({
+      next: (data) => {
+        this.retrieve();
+        confirm('Редактирование успешно. Спорт отобразится в конце списка')
+      },
+      error: (e) => {
+        confirm('Такой вид спорта уже существует')
+      }
+    });
   }
 
   updateTeam(id: number) {
@@ -147,38 +182,12 @@ export class EditSportComponent {
       .subscribe({
         next: (res) => {
           this.retrieve();
+          confirm('Редактирование успешно. Команда отобразится в конце списка')
         },
         error: (e) => {
-          console.error(e);
+          confirm('Команда с таким названием уже существует')
         }
       });
-  }
-
-  createTeam() {
-    const data = {
-      name: this.newTeam.name?.toLowerCase(),
-      count: this.newTeam.count,
-    };
-    this.sportService.createTeam(this.currentSport.id!, data).subscribe({
-      next: (res) => {
-        this.retrieve();
-        this.newTeam = new Team();
-      },
-      error: (e) => {
-        console.error(e);
-      }
-    });
-  }
-
-  deleteSportsman(id: number) {
-    this.sportService.deleteSportsman(id).subscribe({
-      next: (res) => {
-        this.retrieve();
-      },
-      error: (e) => {
-        console.log(e);
-      }
-    })
   }
 
   updateSportsman(id: number) {
@@ -203,30 +212,25 @@ export class EditSportComponent {
       .subscribe({
         next: (res) => {
           this.retrieve();
+          confirm('Редактирование успешно. Спортсмен отобразится в конце списка')
         },
         error: (e) => {
-          console.error(e);
+          confirm('Спортсмен с такими пасспортными данными уже существует. \nПроверьте правильность написания данных')
         }
       });
   }
 
-  createSportsman() {
-    const data = {
-      firstName: this.newSportsman.firstName,
-      lastName: this.newSportsman.lastName,
-      middleName: this.newSportsman.middleName,
-      passport: this.newSportsman.passport,
-      birthdate: this.newSportsman.birthdate
-    };
-    this.sportService.createSportsman(this.currentSport.id!, data).subscribe({
-      next: (res) => {
-        this.retrieve();
-        this.newSportsman = new Sportsman();
-      },
-      error: (e) => {
-        console.error(e);
-      }
-    });
+  getSelectedSport(selector: string) {
+    let sport = this.sports.find(function (item) {
+      return item.name == selector;
+    })!;
+    return sport.id;
+  }
+
+  setSelectedSport(list: any) {
+    for (var t in list) {
+      list[t].selectedSport = this.currentSport.name;
+    }
   }
 
   private clean(): void {
