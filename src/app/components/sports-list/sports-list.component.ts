@@ -1,6 +1,6 @@
-import {Sport} from "../../models/sport-model/sport.model";
 import {SportService} from "../../services/sport-service/sport.service";
 import {Component, OnInit} from '@angular/core';
+import {Sport} from "../../models/Sport";
 
 @Component({
   selector: 'app-sports-list',

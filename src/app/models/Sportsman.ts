@@ -1,6 +1,3 @@
-import {Sport} from "../sport-model/sport.model";
-import {Team} from "../team-model/team.model";
-
 export class Sportsman {
   id?: number;
   passport?: string;
@@ -9,6 +6,6 @@ export class Sportsman {
   middleName?: string;
   birthdate?: Date;
 
-  selectedSport?: Sport;
-  selectedTeam?: Team;
+  sport_id?: number;
+  team_id?: number;
 }

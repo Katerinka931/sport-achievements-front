@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {Team} from "../../models/team-model/team.model";
 import {HttpClient} from "@angular/common/http";
-import {Sport} from "../../models/sport-model/sport.model";
-import {Sportsman} from "../../models/sportsman-model/sportsman.model";
 import {environment} from "../../../environments/environment";
+import {Sport} from "../../models/Sport";
+import {Team} from "../../models/Team";
+import {Sportsman} from "../../models/Sportsman";
 
 @Injectable({
   providedIn: 'root'

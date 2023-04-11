@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {Sport} from "../../models/sport-model/sport.model";
 import {SportService} from "../../services/sport-service/sport.service";
-import {Sportsman} from "../../models/sportsman-model/sportsman.model";
-import {Team} from "../../models/team-model/team.model";
+import {Sport} from "../../models/Sport";
+import {Team} from "../../models/Team";
+import {Sportsman} from "../../models/Sportsman";
 
 @Component({
   selector: 'app-edit-sport',
@@ -31,7 +31,8 @@ export class EditSportComponent {
     birthdate: new Date()
   }
 
-  selected: string;
+  editTeam = {} as Team;
+  editSportsman = {} as Sportsman;
 
   constructor(private sportService: SportService) {
   }
@@ -45,6 +46,8 @@ export class EditSportComponent {
       next: (data) => {
         this.sports = data;
         this.selectItem(this.currentSport.id!)
+        this.newTeam = {} as Team;
+        this.newSportsman = {} as Sportsman;
       }, error: (e) => {
         console.log(e);
       }
@@ -56,11 +59,9 @@ export class EditSportComponent {
       return item.id == id;
     })!;
 
-    this.currentSport = new Sport();
+    this.currentSport = {} as Sport;
     this.currentSport.id = sport.id;
     this.currentSport.name = sport.name;
-
-    this.selected = this.currentSport.name!;
 
     this.teams = sport['teams'];
     this.sportsmen = sport['sportsmen']
@@ -75,6 +76,7 @@ export class EditSportComponent {
     this.sportService.createSport(data)
       .subscribe({
         next: (res) => {
+          this.currentSport = res;
           this.retrieve();
         },
         error: (e) => {
@@ -84,30 +86,19 @@ export class EditSportComponent {
   }
 
   createTeam() {
-    const data = {
-      name: this.newTeam.name?.toLowerCase(),
-      count: this.newTeam.count,
-    };
-    this.sportService.createTeam(this.currentSport.id!, data).subscribe({
+    this.sportService.createTeam(this.currentSport.id!, this.newTeam).subscribe({
       next: (res) => {
         this.retrieve();
-        this.newTeam = new Team();
+        this.newTeam = {} as Team;
       },
       error: (e) => {
-        confirm('Команда с таким названием уже существует')
+        e.status === 400 ? confirm('Количество участников должно быть числом') : confirm('Команда с таким названием уже существует')
       }
     });
   }
 
   createSportsman() {
-    const data = {
-      firstName: this.newSportsman.firstName,
-      lastName: this.newSportsman.lastName,
-      middleName: this.newSportsman.middleName,
-      passport: this.newSportsman.passport,
-      birthdate: this.newSportsman.birthdate
-    };
-    this.sportService.createSportsman(this.currentSport.id!, data).subscribe({
+    this.sportService.createSportsman(this.currentSport.id!, this.newSportsman).subscribe({
       next: (res) => {
         this.retrieve();
         this.newSportsman = new Sportsman();
@@ -159,7 +150,7 @@ export class EditSportComponent {
     this.sportService.updateSport(this.currentSport.id!, this.currentSport).subscribe({
       next: (data) => {
         this.retrieve();
-        confirm('Редактирование успешно. Спорт отобразится в конце списка')
+        confirm('Редактирование успешно')
       },
       error: (e) => {
         confirm('Такой вид спорта уже существует')
@@ -168,47 +159,37 @@ export class EditSportComponent {
   }
 
   updateTeam(id: number) {
-    let teamName = document.getElementById("teamname" + id)!['value'];
-    let count = document.getElementById("count" + id)!['value'];
-    let selector = document.getElementById("t_sport_selector_" + id)!['value'];
-    let sport_id = this.getSelectedSport(selector);
+    this.editTeam.name = (document.getElementById("teamname" + id) as HTMLInputElement).value;
 
-    const data = {
-      name: teamName,
-      count: count,
-    };
+    let count = (document.getElementById("count" + id) as HTMLInputElement).value
+    if (!isNaN(Number(count))) {
+      this.editTeam.count = Number(count);
+      this.editTeam.sport_id = Number((document.getElementById("t_sport_selector_" + id) as HTMLInputElement).value);
 
-    this.sportService.updateTeam(sport_id!, id, data)
-      .subscribe({
-        next: (res) => {
-          this.retrieve();
-          confirm('Редактирование успешно. Команда отобразится в конце списка')
-        },
-        error: (e) => {
-          confirm('Команда с таким названием уже существует')
-        }
-      });
+      this.sportService.updateTeam(this.editTeam.sport_id!, id, this.editTeam)
+        .subscribe({
+          next: (res) => {
+            this.retrieve();
+            confirm('Редактирование успешно')
+          },
+          error: (e) => {
+            confirm('Команда с таким названием уже существует')
+          }
+        });
+    } else {
+      confirm('Количество участников должно быть числом')
+    }
   }
 
   updateSportsman(id: number) {
-    let firstName = document.getElementById("firstName" + id)!['value'];
-    let lastName = document.getElementById("lastName" + id)!['value'];
-    let middleName = document.getElementById("middleName" + id)!['value'];
-    let passport = document.getElementById("passport" + id)!['value'];
-    let birthdate = document.getElementById("birthdate" + id)!['value'];
+    this.editSportsman.passport = (document.getElementById("passport" + id) as HTMLInputElement).value;
+    this.editSportsman.firstName = (document.getElementById("firstName" + id) as HTMLInputElement).value;
+    this.editSportsman.lastName = (document.getElementById("lastName" + id) as HTMLInputElement).value;
+    this.editSportsman.middleName = (document.getElementById("middleName" + id) as HTMLInputElement).value;
+    this.editSportsman.birthdate = new Date((document.getElementById("birthdate" + id) as HTMLInputElement).value);
+    this.editSportsman.sport_id = Number((document.getElementById("sport_selector_" + id) as HTMLInputElement).value);
 
-    let selector = document.getElementById("sport_selector_" + id)!['value'];
-    let sport_id = this.getSelectedSport(selector);
-
-    const data = {
-      firstName: firstName,
-      lastName: lastName,
-      middleName: middleName,
-      passport: passport,
-      birthdate: birthdate
-    };
-
-    this.sportService.updateSportsman(sport_id!, id, data)
+    this.sportService.updateSportsman(this.editSportsman.sport_id!, id, this.editSportsman)
       .subscribe({
         next: (res) => {
           this.retrieve();
@@ -237,4 +218,24 @@ export class EditSportComponent {
     this.teams = [];
     this.sportsmen = [];
   }
+
+  getSportByChildID() {
+    let sport_id = this.currentSport.id!
+    let sport = this.sports.find(function (item) {
+      return item.id == sport_id;
+    })!;
+    return sport.name;
+  }
+
+  keyPressNumbers(event: any) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
+  //(keypress)="keyPressNumbers($event)"
 }

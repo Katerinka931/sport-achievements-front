@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Sportsman} from "../../models/sportsman-model/sportsman.model";
-import {Achievement} from "../../models/achievement-model/achievement.model";
-import {Contact} from "../../models/contact-model/contact.model";
 import {SportsmanService} from "../../services/sportsman-service/sportsman.service";
-import {Team} from "../../models/team-model/team.model";
-import {Sport} from "../../models/sport-model/sport.model";
 import {SportService} from "../../services/sport-service/sport.service";
 import {TeamService} from "../../services/team-service/team.service";
+import {Sport} from "../../models/Sport";
+import {Team} from "../../models/Team";
+import {Sportsman} from "../../models/Sportsman";
+import {Contact} from "../../models/Contact";
+import {Achievement} from "../../models/Achievement";
 
 @Component({
   selector: 'app-edit-sportsman',
@@ -23,21 +23,14 @@ export class EditSportsmanComponent implements OnInit {
   selectedSport: string;
   selectedTeam: string;
 
-  currentSportsman: Sportsman = {
-    passport: '',
-    lastName: '',
-    firstName: '',
-    middleName: '',
-    birthdate: new Date()
-  }
-  newContact: Contact = {
-    phone: '',
-    email: ''
-  };
-  newAchievement: Achievement = {
-    name: '',
-    recvDate: new Date()
-  };
+  currentSportsman = {} as Sportsman;
+
+  newContact = {} as Contact;
+  newAchievement = {} as Achievement;
+
+  editContact = {} as Contact;
+  editAchievement = {} as Achievement;
+
   isChecked: boolean;
 
   constructor(private sportsmanService: SportsmanService, private sportService: SportService, private teamService: TeamService) {
@@ -89,7 +82,6 @@ export class EditSportsmanComponent implements OnInit {
       return item.id == id;
     })!;
 
-    this.currentSportsman = new Sportsman();
     this.currentSportsman.id = sportsman.id;
     this.currentSportsman.passport = sportsman.passport;
     this.currentSportsman.lastName = sportsman.lastName;
@@ -127,6 +119,7 @@ export class EditSportsmanComponent implements OnInit {
       this.teamService.createSportsman(this.getSelectedTeam(this.selectedTeam)!, data)
         .subscribe({
           next: (res) => {
+            this.currentSportsman = res;
             this.retrieve();
           },
           error: (e) => {
@@ -137,6 +130,7 @@ export class EditSportsmanComponent implements OnInit {
       this.sportService.createSportsman(this.getSelectedSport(this.selectedSport)!, data)
         .subscribe({
           next: (res) => {
+            this.currentSportsman = res;
             this.retrieve();
           },
           error: (e) => {
@@ -147,15 +141,10 @@ export class EditSportsmanComponent implements OnInit {
   }
 
   createContact() {
-    const data = {
-      phone: this.newContact.phone,
-      email: this.newContact.email,
-    };
-
-    this.sportsmanService.createContact(this.currentSportsman.id!, data).subscribe({
+    this.sportsmanService.createContact(this.currentSportsman.id!, this.newContact).subscribe({
       next: (res) => {
         this.retrieve();
-        this.newContact = new Contact();
+        this.newContact = {} as Contact;
       },
       error: (e) => {
         e.status == 400 ? confirm('Неправильно введен номер телефона') : confirm('Проверьте правильность введенных данных!')
@@ -164,15 +153,10 @@ export class EditSportsmanComponent implements OnInit {
   }
 
   createAchievement() {
-    const data = {
-      name: this.newAchievement.name,
-      recvDate: this.newAchievement.recvDate
-    };
-
-    this.sportsmanService.createAchievement(this.currentSportsman.id!, data).subscribe({
+    this.sportsmanService.createAchievement(this.currentSportsman.id!, this.newAchievement).subscribe({
       next: (res) => {
         this.retrieve();
-        this.newAchievement = new Achievement();
+        this.newAchievement = {} as Achievement;
       },
       error: (e) => {
         confirm('Не удалось создать достижение. Проверьте правильность введенных данных ')
@@ -243,15 +227,10 @@ export class EditSportsmanComponent implements OnInit {
   }
 
   updateContact(id: number) {
-    let phone = document.getElementById("phone" + id)!['value'];
-    let email = document.getElementById("email" + id)!['value'];
+    this.editContact.phone = (document.getElementById("phone" + id) as HTMLInputElement).value;
+    this.editContact.email = (document.getElementById("email" + id) as HTMLInputElement).value;
 
-    const data = {
-      phone: phone,
-      email: email,
-    };
-
-    this.sportsmanService.updateContact(this.currentSportsman.id!, id, data)
+    this.sportsmanService.updateContact(this.currentSportsman.id!, id, this.editContact)
       .subscribe({
         next: (res) => {
           this.retrieve();
@@ -264,15 +243,10 @@ export class EditSportsmanComponent implements OnInit {
   }
 
   updateAchievement(id: number) {
-    let name = document.getElementById("name" + id)!['value'];
-    let recvDate = document.getElementById("recvDate" + id)!['value'];
+    this.editAchievement.name = (document.getElementById("name" + id) as HTMLInputElement).value;
+    this.editAchievement.recvDate = new Date((document.getElementById("recvDate" + id) as HTMLInputElement).value);
 
-    const data = {
-      name: name,
-      recvDate: recvDate,
-    };
-
-    this.sportsmanService.updateAchievement(this.currentSportsman.id!, id, data)
+    this.sportsmanService.updateAchievement(this.currentSportsman.id!, id, this.editAchievement)
       .subscribe({
         next: (res) => {
           this.retrieve();
@@ -325,5 +299,4 @@ export class EditSportsmanComponent implements OnInit {
       this.getSportBySportsman()
     }
   }
-
 }

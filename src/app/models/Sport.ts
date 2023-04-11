@@ -1,4 +1,4 @@
-export class Sport {
+export interface Sport {
   id?: number;
   name?: string;
 }

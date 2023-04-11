@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {Sportsman} from "../../models/sportsman-model/sportsman.model";
 import {HttpClient} from "@angular/common/http";
-import {Contact} from "../../models/contact-model/contact.model";
-import {Achievement} from "../../models/achievement-model/achievement.model";
-import {Team} from "../../models/team-model/team.model";
 import {environment} from "../../../environments/environment";
+import {Sportsman} from "../../models/Sportsman";
+import {Contact} from "../../models/Contact";
+import {Achievement} from "../../models/Achievement";
+import {Team} from "../../models/Team";
 
 @Injectable({
   providedIn: 'root'

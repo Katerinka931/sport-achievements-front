@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {Team} from "../../models/team-model/team.model";
-import {Sportsman} from "../../models/sportsman-model/sportsman.model";
 import {TeamService} from "../../services/team-service/team.service";
-import {Sport} from "../../models/sport-model/sport.model";
 import {SportService} from "../../services/sport-service/sport.service";
+import {Sport} from "../../models/Sport";
+import {Team} from "../../models/Team";
+import {Sportsman} from "../../models/Sportsman";
 
 @Component({
   selector: 'app-edit-team',
@@ -16,19 +16,10 @@ export class EditTeamComponent {
 
   sports: Sport[];
   selectedSport: string;
-  selectedTeam: string;
 
-  currentTeam: Team = {
-    name: '',
-    count: 0
-  }
-  newSportsman: Sportsman = {
-    passport: '',
-    firstName: '',
-    lastName: '',
-    middleName: '',
-    birthdate: new Date()
-  };
+  currentTeam = {} as Team;
+  newSportsman = {} as Sportsman;
+  editSportsman = {} as Sportsman;
 
   constructor(private teamService: TeamService, private sportService: SportService) {
   }
@@ -46,7 +37,10 @@ export class EditTeamComponent {
     this.teamService.getAll().subscribe({
       next: (data) => {
         this.teams = data;
-        this.selectItem(this.currentTeam.id!)
+        if (this.currentTeam.id != undefined)
+        {
+          this.selectItem(this.currentTeam.id!)
+        }
       }, error: (e) => {
         console.log(e);
       }
@@ -70,14 +64,13 @@ export class EditTeamComponent {
 
     this.teamService.getSportByTeam(id).subscribe({
       next: (res) => {
-        this.currentTeam = new Team();
         this.currentTeam.id = team.id;
         this.currentTeam.name = team.name;
         this.currentTeam.count = team.count;
         this.selectedSport = res.name!;
-
-        this.selectedTeam = this.currentTeam.name!;
         this.sportsmen = team['sportsmen'];
+
+        console.log(this.sportsmen)
       },
       error: (e) => {
       }
@@ -92,10 +85,11 @@ export class EditTeamComponent {
     this.sportService.createTeam(this.getSelectedSport(this.selectedSport)!, data)
       .subscribe({
         next: (res) => {
+          this.currentTeam = res;
           this.retrieve();
         },
         error: (e) => {
-          confirm('Команда с таким названием уже существует')
+          e.status === 400 ? confirm('Количество участников должно быть числом') : confirm('Команда с таким названием уже существует')
         }
       });
   }
@@ -151,30 +145,20 @@ export class EditTeamComponent {
         confirm('Редактирование успешно. Команда будет перезаписана в конец списка')
       },
       error: (e) => {
-        confirm('Редактирование не удалось. Команда с таким названием уже существует')
+        e.status === 400 ? confirm('Количество участников должно быть числом') : confirm('Команда с таким названием уже существует')
       }
     });
   }
 
   updateSportsman(id: number) {
-    let firstName = document.getElementById("firstName" + id)!['value'];
-    let lastName = document.getElementById("lastName" + id)!['value'];
-    let middleName = document.getElementById("middleName" + id)!['value'];
-    let passport = document.getElementById("passport" + id)!['value'];
-    let birthdate = document.getElementById("birthdate" + id)!['value'];
+    this.editSportsman.passport = (document.getElementById("passport" + id) as HTMLInputElement).value;
+    this.editSportsman.firstName = (document.getElementById("firstName" + id) as HTMLInputElement).value;
+    this.editSportsman.lastName = (document.getElementById("lastName" + id) as HTMLInputElement).value;
+    this.editSportsman.middleName = (document.getElementById("middleName" + id) as HTMLInputElement).value;
+    this.editSportsman.birthdate = new Date((document.getElementById("birthdate" + id) as HTMLInputElement).value);
+    this.editSportsman.team_id = Number((document.getElementById("team_selector_" + id) as HTMLInputElement).value);
 
-    let selector = document.getElementById("team_selector_" + id)!['value'];
-    let team_id = this.getSelectedTeam(selector);
-
-    const data = {
-      firstName: firstName,
-      lastName: lastName,
-      middleName: middleName,
-      passport: passport,
-      birthdate: birthdate
-    };
-
-    this.teamService.updateSportsman(team_id!, id, data)
+    this.teamService.updateSportsman(this.editSportsman.team_id!, id, this.editSportsman)
       .subscribe({
         next: (res) => {
           this.retrieve();
@@ -201,7 +185,17 @@ export class EditTeamComponent {
   }
 
   private clean(): void {
+    this.currentTeam = {} as Team;
     this.teams = [];
     this.sportsmen = [];
+    this.selectedSport = '';
+  }
+
+  getTeamBySportsmanID() {
+    let team_id = this.currentTeam.id!;
+    let team = this.teams.find(function (item) {
+      return item.id == team_id;
+    })!;
+    return team.name
   }
 }

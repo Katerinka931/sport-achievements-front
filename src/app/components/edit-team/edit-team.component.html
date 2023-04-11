@@ -57,9 +57,9 @@
                      value="{{sportsman.passport}}"/>
               <input class="additional-sportsman-item sportsman-update" type="date" id="birthdate{{sportsman.id}}"
                      value="{{sportsman.birthdate}}"/>
-              <select class="additional-sportsman-item sportsman-update" id="team_selector_{{sportsman.id}}">
+              <select class="additional-sportsman-item sportsman-update" id="team_selector_{{sportsman.id}}" [value]="getTeamBySportsmanID()">
                 <option *ngFor="let type of teams"
-                        [value]="type.name" [selected]="type.name == selectedTeam">
+                        [value]="type.id" [selected]="type.id == sportsman.team_id">
                   {{ type.name }}
                 </option>
               </select>

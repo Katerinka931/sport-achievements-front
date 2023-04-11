@@ -41,10 +41,9 @@
             <input class="additional-team-item team-update text-capitalize" type="text" id="teamname{{team.id}}"
                    value="{{team.name}}"/>
             <input class="additional-team-item team-update" type="text" id="count{{team.id}}" value="{{team.count}}"/>
-            <select class="additional-team-item team-update"
-                    id="t_sport_selector_{{team.id}}" [value]="team.selectedSport">
+            <select class="additional-team-item team-update" id="t_sport_selector_{{team.id}}" [value]="getSportByChildID()">
               <option *ngFor="let type of sports"
-                      [value]="type.name" [selected]="type.name == team.selectedSport">
+                      [value]="type.id" [selected]="type.id == team.sport_id">
                 {{ type.name }}
               </option>
             </select>
@@ -83,9 +82,9 @@
                    value="{{sportsman.passport}}"/>
             <input class="additional-sportsman-item sportsman-update" type="date" id="birthdate{{sportsman.id}}"
                    value="{{sportsman.birthdate}}"/>
-            <select class="additional-sportsman-item sportsman-update" id="sport_selector_{{sportsman.id}}">
+            <select class="additional-sportsman-item sportsman-update" id="sport_selector_{{sportsman.id}}" [value]="getSportByChildID()">
               <option *ngFor="let type of sports"
-                      [value]="type.name" [selected]="type.name == sportsman.selectedSport">
+                      [value]="type.id" [selected]="type.id == sportsman.sport_id">
                 {{ type.name }}
               </option>
             </select>

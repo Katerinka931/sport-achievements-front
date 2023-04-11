@@ -7,10 +7,6 @@ import { SportsListComponent } from './components/sports-list/sports-list.compon
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {MatTreeModule} from "@angular/material/tree";
-import {MatIconModule} from "@angular/material/icon";
-import {MatProgressBarModule} from "@angular/material/progress-bar";
-import {MatButtonModule} from "@angular/material/button";
 import { EditSportsmanComponent } from './components/edit-sportsman/edit-sportsman.component';
 import { EditTeamComponent } from './components/edit-team/edit-team.component';
 import {EditSportComponent} from "./components/edit-sport/edit-sport.component";
@@ -29,10 +25,6 @@ import {EditSportComponent} from "./components/edit-sport/edit-sport.component";
         FormsModule,
         HttpClientModule,
         NgbModule,
-        MatTreeModule,
-        MatIconModule,
-        MatProgressBarModule,
-        MatButtonModule
     ],
   providers: [],
   bootstrap: [AppComponent]
