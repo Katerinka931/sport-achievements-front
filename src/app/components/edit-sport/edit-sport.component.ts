@@ -86,76 +86,91 @@ export class EditSportComponent {
   }
 
   createTeam() {
-    this.sportService.createTeam(this.currentSport.id!, this.newTeam).subscribe({
-      next: (res) => {
-        this.retrieve();
-        this.newTeam = {} as Team;
-      },
-      error: (e) => {
-        e.status === 400 ? confirm('Количество участников должно быть числом') : confirm('Команда с таким названием уже существует')
-      }
-    });
+    if (this.currentSport.id != undefined) {
+      this.sportService.createTeam(this.currentSport.id!, this.newTeam).subscribe({
+        next: (res) => {
+          this.retrieve();
+          this.newTeam = {} as Team;
+        },
+        error: (e) => {
+          e.status === 400 ? confirm('Количество участников должно быть числом') : confirm('Команда с таким названием уже существует')
+        }
+      });
+    } else {
+      confirm('Вид спорта не выбран!')
+    }
   }
 
   createSportsman() {
-    this.sportService.createSportsman(this.currentSport.id!, this.newSportsman).subscribe({
-      next: (res) => {
-        this.retrieve();
-        this.newSportsman = new Sportsman();
-      },
-      error: (e) => {
-        confirm('Создать спортсмена не удалось. \nСпортсмен с такими паспортными данными уже существует')
-      }
-    });
+    if (this.currentSport.id != undefined) {
+      this.sportService.createSportsman(this.currentSport.id!, this.newSportsman).subscribe({
+        next: (res) => {
+          this.retrieve();
+          this.newSportsman = new Sportsman();
+        },
+        error: (e) => {
+          confirm('Создать спортсмена не удалось. \nСпортсмен с такими паспортными данными уже существует')
+        }
+      });
+    } else {
+      confirm('Вид спорта не выбран!')
+    }
   }
 
   deleteSport(id: number) {
-    this.sportService.deleteSport(id).subscribe({
-      next: (res) => {
-        this.retrieve();
-        this.clean();
-        confirm('Удаление успешно')
-      },
-      error: (e) => {
-        confirm('Элемент не удалён. \nСтатус ошибки ' + e.status)
-      }
-    });
+    if (confirm('Вы уверены, что хотите удалить?')) {
+      this.sportService.deleteSport(id).subscribe({
+        next: (res) => {
+          this.retrieve();
+          this.clean();
+        },
+        error: (e) => {
+          confirm('Элемент не удалён. \nСтатус ошибки ' + e.status)
+        }
+      });
+    }
   }
 
   deleteTeam(id: number) {
-    this.sportService.deleteTeam(id).subscribe({
-      next: (res) => {
-        this.retrieve();
-        confirm('Удаление успешно')
-      },
-      error: (e) => {
-        confirm('Элемент не удалён. \nСтатус ошибки ' + e.status)
-      }
-    })
+    if (confirm('Вы уверены, что хотите удалить?')) {
+      this.sportService.deleteTeam(id).subscribe({
+        next: (res) => {
+          this.retrieve();
+        },
+        error: (e) => {
+          confirm('Элемент не удалён. \nСтатус ошибки ' + e.status)
+        }
+      })
+    }
   }
 
   deleteSportsman(id: number) {
-    this.sportService.deleteSportsman(id).subscribe({
-      next: (res) => {
-        this.retrieve();
-        confirm('Удаление успешно')
-      },
-      error: (e) => {
-        confirm('Элемент не удалён. \nСтатус ошибки ' + e.status)
-      }
-    })
+    if (confirm('Вы уверены, что хотите удалить?')) {
+      this.sportService.deleteSportsman(id).subscribe({
+        next: (res) => {
+          this.retrieve();
+        },
+        error: (e) => {
+          confirm('Элемент не удалён. \nСтатус ошибки ' + e.status)
+        }
+      })
+    }
   }
 
   editSport() {
-    this.sportService.updateSport(this.currentSport.id!, this.currentSport).subscribe({
-      next: (data) => {
-        this.retrieve();
-        confirm('Редактирование успешно')
-      },
-      error: (e) => {
-        confirm('Такой вид спорта уже существует')
-      }
-    });
+    if (this.currentSport.id != undefined) {
+      this.sportService.updateSport(this.currentSport.id!, this.currentSport).subscribe({
+        next: (data) => {
+          this.retrieve();
+          confirm('Редактирование успешно')
+        },
+        error: (e) => {
+          confirm('Такой вид спорта уже существует')
+        }
+      });
+    } else {
+      confirm('Невозможно редактировать несуществующий спорт')
+    }
   }
 
   updateTeam(id: number) {
@@ -237,5 +252,6 @@ export class EditSportComponent {
       return true;
     }
   }
+
   //(keypress)="keyPressNumbers($event)"
 }

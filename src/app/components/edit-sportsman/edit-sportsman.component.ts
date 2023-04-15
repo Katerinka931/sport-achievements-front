@@ -165,39 +165,42 @@ export class EditSportsmanComponent implements OnInit {
   }
 
   deleteSportsman(id: number) {
-    this.sportsmanService.deleteSportsman(id).subscribe({
-      next: (res) => {
-        this.retrieve();
-        confirm('Удаление успешно')
-      },
-      error: (e) => {
-        confirm('Удаление не удалось')
-      }
-    });
+    if (confirm('Вы уверены, что хотите удалить?')) {
+      this.sportsmanService.deleteSportsman(id).subscribe({
+        next: (res) => {
+          this.retrieve();
+        },
+        error: (e) => {
+          confirm('Удаление не удалось')
+        }
+      });
+    }
   }
 
   deleteContact(id: number) {
-    this.sportsmanService.deleteContact(id).subscribe({
-      next: (res) => {
-        this.retrieve();
-        confirm('Удаление успешно')
-      },
-      error: (e) => {
-        confirm('Удаление не удалось')
-      }
-    })
+    if (confirm('Вы уверены, что хотите удалить?')) {
+      this.sportsmanService.deleteContact(id).subscribe({
+        next: (res) => {
+          this.retrieve();
+        },
+        error: (e) => {
+          confirm('Удаление не удалось')
+        }
+      })
+    }
   }
 
   deleteAchievement(id: number) {
-    this.sportsmanService.deleteAchievement(id).subscribe({
-      next: (res) => {
-        this.retrieve();
-        confirm('Удаление успешно')
-      },
-      error: (e) => {
-        confirm('Удаление не удалось')
-      }
-    })
+    if (confirm('Вы уверены, что хотите удалить?')) {
+      this.sportsmanService.deleteAchievement(id).subscribe({
+        next: (res) => {
+          this.retrieve();
+        },
+        error: (e) => {
+          confirm('Удаление не удалось')
+        }
+      })
+    }
   }
 
   editSportsman() {

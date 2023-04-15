@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditSportsmanComponent } from './components/edit-sportsman/edit-sportsman.component';
 import { EditTeamComponent } from './components/edit-team/edit-team.component';
 import {EditSportComponent} from "./components/edit-sport/edit-sport.component";
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {EditSportComponent} from "./components/edit-sport/edit-sport.component";
     SportsListComponent,
     EditSportsmanComponent,
     EditTeamComponent,
-    EditSportComponent
+    EditSportComponent,
+    PageNotFoundComponent
   ],
     imports: [
         BrowserModule,
