@@ -86,18 +86,22 @@ export class EditSportComponent {
   }
 
   createTeam() {
-    if (this.currentSport.id != undefined) {
-      this.sportService.createTeam(this.currentSport.id!, this.newTeam).subscribe({
-        next: (res) => {
-          this.retrieve();
-          this.newTeam = {} as Team;
-        },
-        error: (e) => {
-          e.status === 400 ? confirm('Количество участников должно быть числом') : confirm('Команда с таким названием уже существует')
-        }
-      });
+    if (!isNaN(Number(this.newTeam.count))) {
+      if (this.currentSport.id != undefined) {
+        this.sportService.createTeam(this.currentSport.id!, this.newTeam).subscribe({
+          next: (res) => {
+            this.retrieve();
+            this.newTeam = {} as Team;
+          },
+          error: (e) => {
+            confirm('Команда с таким названием уже существует')
+          }
+        });
+      } else {
+        confirm('Вид спорта не выбран!')
+      }
     } else {
-      confirm('Вид спорта не выбран!')
+      confirm('Количество участников должно быть числом')
     }
   }
 
